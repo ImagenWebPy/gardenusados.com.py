@@ -1,4 +1,105 @@
-/*//////////////////////////////////////////////////////////////////////////////////////////*/
-/* CUSTOM CSS (ADD YOUR CSS HERE!) */
-/*//////////////////////////////////////////////////////////////////////////////////////////*/
+.borderRightNone {border-right: none !important;}
+.logoSize {width: 70%; position: relative; top: -5px;}
+.logoSizeFooter {width: 40%; position: relative; top: -5px;}
+.h2List {display: inline-block;}
+.resizeLogoList{ width: 40%;}
+.paddingCorrectionList { padding-right: 6px !important;}
+.heightCorrectionList{ height: 100%;}
+/*
+  33. Pagination
+*/
+.m-pagination {
+    width: 100%;
+    display: inline-block;
+    list-style: none;
+}
+.m-pagination li {
+    width: auto;
+    float: left;
+    margin-right: 10px;
+}
+.m-pagination li.active {
+    line-height: 30px;
+    box-shadow: inset 0 0 0 2px #ededed;
+    padding: 0 15px;
+    color: #111111;
+}
+.m-btn {
+    display: inline-block !important;
+    transition: all ease 0.4s !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+    border: 0 !important;
+    box-sizing: border-box !important;
+    width: auto !important;
+    font-style: normal !important;
+}
+.m-btn:hover {
+    text-decoration: none !important;
+}
+.m-btn[data-color="primary"] {
+    background-color: #37c879 !important;
+    color: #fff !important;
+}
+.m-btn[data-color="secondary"] {
+    background-color: #111111 !important;
+    color: #fff !important;
+}
+.m-btn[data-color="white"] {
+    background-color: #fff !important;
+    color: #111111 !important;
+}
+.m-btn[data-color="primary"]:hover {
+    background-color: #2ca061 !important;
+    color: #fff !important;
+}
+.m-btn[data-color="secondary"]:hover {
+    background-color: #000000 !important;
+    color: #fff !important;
+}
+.m-btn[data-color="white"]:hover {
+    background-color: #e6e6e6 !important;
+    color: #111111 !important;
+}
+.m-btn[data-size="normal"] {
+    line-height: 40px !important;
+    padding: 0 20px !important;
+}
+.m-btn[data-size="normal"] i {
+    line-height: 40px !important;
+}
+.m-btn[data-size="large"] {
+    line-height: 55px !important;
+    padding: 0 25px !important;
+    font-size: 120% !important;
+}
+.m-btn[data-size="large"] i {
+    line-height: 55px !important;
+}
+.m-btn[data-size="small"] {
+    line-height: 30px !important;
+    padding: 0 15px !important;
+    font-size: 80% !important;
+}
+.m-btn[data-size="small"] i {
+    line-height: 30px !important;
+}
+.m-btn[data-color="primary"][data-border] {
+    background-color: transparent !important;
+    box-shadow: inset 0 0 0 2px #37c879 !important;
+    color: #37c879 !important;
+}
+.m-btn[data-color="primary"][data-border]:hover {
+    background-color: #2ca061 !important;
+    color: #fff !important;
+}
+.m-btn[data-color="secondary"][data-border] {
+    background-color: transparent !important;
+    box-shadow: inset 0 0 0 2px #de483d !important;
+    color: #111111 !important;
+}
+.m-btn[data-color="secondary"][data-border]:hover {
+    background-color: #de483d !important;
+    color: #fff !important;
+}
 

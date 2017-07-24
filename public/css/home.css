@@ -1,21 +1,21 @@
 /*------------------------------------------------------------------
 [Table of contents]
 
-	- Top Bar
-	- Nav
-	- Slider
-	- Search
-	- Featured
-	- Welcome
-	- World
-	- Asks
-	- Auto
-	- Count
-	- Contact
-	- Review
-	- Features
-	- Info
-	- Footer
+        - Top Bar
+        - Nav
+        - Slider
+        - Search
+        - Featured
+        - Welcome
+        - World
+        - Asks
+        - Auto
+        - Count
+        - Contact
+        - Review
+        - Features
+        - Info
+        - Footer
 
 - Author:  Andrey Sokoltsov
 - Profile:	http://themeforest.net/user/andreysokoltsov
@@ -35,15 +35,13 @@
 }
 
 .b-topBar__addr{
-    padding-left: 35px;
+    padding-left: 20px;
     border-right:1px solid #eeeeee;
     border-left:1px solid #eeeeee;
-    margin-right: 10px;
 }
 
 .b-topBar__addr span.fa,.b-topBar__tel span.fa{
     font-size:17px;
-    margin-right: 10px;
     vertical-align: middle;
 }
 
@@ -80,7 +78,7 @@
 }
 
 .b-topBar__lang{
-   padding: 18px 0; 
+    padding: 18px 0; 
 }
 
 .b-topBar__lang{
@@ -135,7 +133,7 @@ a.m-langLink{
 }
 
 .dropdown-menu{
-	min-width: 100px;
+    min-width: 100px;
     padding: 0;
     border-radius:0;
     box-shadow:none;
@@ -144,15 +142,14 @@ a.m-langLink{
 
 /* Nav */
 .b-nav{
-	padding: 30px 0 25px;
-	position: relative;
-	z-index: 99;
+    padding: 15px 0 15px;
+    position: relative;
+    z-index: 99;
 }
 
 .b-nav__logo{
     float:left;
     padding: 8px 0 0 5px;
-    background: url(../images/logo/logo.png) left top no-repeat;
     text-transform: uppercase;
 }
 
@@ -195,19 +192,19 @@ a.m-langLink{
     height: 38px;
 }
 .navbar-nav-menu > li > .dropdown-menu{
-	display: block !important;
-	height: 0px;
-	overflow: hidden;
-	opacity: 0;
+    display: block !important;
+    height: 0px;
+    overflow: hidden;
+    opacity: 0;
 }
 .navbar-nav-menu > li.open > .dropdown-menu{
-	height: auto;
-	padding-bottom: 3px;
-	opacity: 1;
-	-webkit-transition: all 500ms ease 0s;
-	-moz-transition: all 500ms ease 0s;
-	-o-transition: all 500ms ease 0s;
-	transition: all 500ms ease 0s;
+    height: auto;
+    padding-bottom: 3px;
+    opacity: 1;
+    -webkit-transition: all 500ms ease 0s;
+    -moz-transition: all 500ms ease 0s;
+    -o-transition: all 500ms ease 0s;
+    transition: all 500ms ease 0s;
 }
 .b-nav__list ul li a{
     text-transform: uppercase;
@@ -250,9 +247,9 @@ a.m-langLink{
 }
 
 .b-slider__info{
-   text-transform: uppercase;
-   margin:0 0 0 20px;
-   text-align: left;
+    text-transform: uppercase;
+    margin:0 0 0 20px;
+    text-align: left;
     top: 20%;
 }
 
@@ -402,7 +399,7 @@ a.m-langLink{
 }
 
 .b-search__main-type svg,.b-search__main-type h5{
-   cursor: pointer; 
+    cursor: pointer; 
 }
 
 .b-search__main-type svg:hover g{
@@ -436,10 +433,10 @@ a.m-langLink{
 }
 
 .b-search__main-type h4{
-   text-transform: uppercase;
-   font:600 14px 'Open Sans',sans-serif;
-   text-align: right;
-   margin: 20px 0 0 0;
+    text-transform: uppercase;
+    font:600 14px 'Open Sans',sans-serif;
+    text-align: right;
+    margin: 20px 0 0 0;
 }
 
 .b-search__main-type h5{
@@ -464,8 +461,8 @@ a.m-langLink{
     font:400 13px 'Open Sans',sans-serif;
     background: transparent;
     -webkit-appearance: none;
-     -moz-appearance: none;
-     -ms-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
     appearance: none!important;
     cursor:pointer;
 }
@@ -481,12 +478,12 @@ a.m-langLink{
 }
 
 .b-search__main-form p{
-   text-align: left;
-   font:400 10px 'Open Sans',sans-serif;
-   padding-left: 10px;
-   margin-top: 10px;
-   margin-bottom: 0;
-   text-transform: uppercase;
+    text-align: left;
+    font:400 10px 'Open Sans',sans-serif;
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-transform: uppercase;
 }
 
 .m-firstSelects{
@@ -504,7 +501,7 @@ a.m-langLink{
 }
 
 .b-search__main-form-submit{
-    text-align:right;
+    text-align:left;
 }
 
 .b-search__main-form-submit a{
@@ -569,7 +566,7 @@ a.m-langLink{
     content:'';
     border-radius: 100%;
     vertical-align: text-top;
-    
+
 }
 
 .ui-slider-handle:last-of-type{
@@ -742,8 +739,8 @@ a.m-langLink{
 
 /* Welcome */
 .b-welcome{
-  background:url(../images/backgrounds/audiBg.png) left top no-repeat;
-  position: relative;
+    background:url(../images/backgrounds/audiBg.png) left top no-repeat;
+    position: relative;
 }
 
 .b-welcome .container{
@@ -843,7 +840,7 @@ a.m-langLink{
 
 .b-welcome__services-img span.fa{
     font-size: 40px;
-     height: 40px;
+    height: 40px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -1108,13 +1105,13 @@ a.m-langLink{
 }
 
 .b-auto__main-toggle{
-   font: 600 13px 'Open Sans',sans-serif;
-   padding: 0 0 10px 0;
-   margin-right: 35px;
-   position: relative;
-   text-align: center;
-   display: inline-block;
-   text-transform: uppercase;
+    font: 600 13px 'Open Sans',sans-serif;
+    padding: 0 0 10px 0;
+    margin-right: 35px;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    text-transform: uppercase;
 }
 
 .b-auto__main-toggle.m-active{
@@ -1164,7 +1161,7 @@ a.m-langLink{
     right: 20px;
     top:50%;
     margin-top: -4px;
-    
+
 }
 
 .b-auto__main-nav li:hover a{
@@ -1425,7 +1422,7 @@ a.m-langLink{
 
 .b-review__main-person{
     overflow: hidden;
-   float:left;
+    float:left;
     width:105px;
     height:105px;
     border-radius: 100%;

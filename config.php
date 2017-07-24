@@ -40,7 +40,8 @@ define('CSS', URL . 'public/css/');
 define('JS', URL . 'public/js/');
 define('IMG', URL . 'public/images/');
 define('MEDIA', URL . 'public/media/');
-define('CANT_REG_PAGINA', 15);
+define('PUBLIC_FOLDER', URL . 'public/');
+define('CANT_REG', 16);
 
 function getHost() {
     $host = $_SERVER['HTTP_HOST'];
