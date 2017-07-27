@@ -115,8 +115,11 @@ class Helper {
      * @return array url
      */
     public function getUrl() {
-        $url = $_GET['url'];
-        $url = explode('/', $url);
+        $url = '';
+        if (!empty($_GET['url'])) {
+            $url = $_GET['url'];
+            $url = explode('/', $url);
+        }
         return $url;
     }
 
@@ -313,6 +316,122 @@ class Helper {
                                 ORDER BY v.id desc
                                 LIMIT $limit");
         return $sql;
+    }
+
+    public function getSedes() {
+        $sql = $this->db->select("select * from sede where estado = 1 ORDER BY id ASC");
+        return $sql;
+    }
+
+    public function getHorarioAtencion() {
+        $sql = $this->db->select("select horario_atencion from sede where principal = 1");
+        return $sql[0]['horario_atencion'];
+    }
+
+    public function getGardenMarcas() {
+        $sql = $this->db->select("SELECT * FROM `marca` where garden = 1 and estado = 1;");
+        return $sql;
+    }
+
+    public function getMarcas() {
+        $sql = $this->db->select("select id, descripcion from marca where estado = 1 ORDER BY descripcion ASC");
+        return $sql;
+    }
+
+    public function getMinMaxPrecio() {
+        $sql = $this->db->select("select MAX(precio) as max, MIN(precio) as min from vehiculo");
+        $data = array(
+            'max' => $sql[0]['max'],
+            'min' => $sql[0]['min']
+        );
+        return $data;
+    }
+
+    public function getTipoVehiculo() {
+        $sql = $this->db->select("select id, descripcion from tipo_vehiculo where estado = 1");
+        return $sql;
+    }
+
+    public function getTipoCombusitble() {
+        $sql = $this->db->select("select id, descripcion from combustible where estado = 1");
+        return $sql;
+    }
+
+    public function loadBuscador() {
+        $marcas = $this->getMarcas();
+        $rangoPrecio = $this->getMinMaxPrecio();
+        $tipoVehiculo = $this->getTipoVehiculo();
+        $sede = $this->getSedes();
+        $combustible = $this->getTipoCombusitble();
+        $data = '<div class="col-lg-3 col-sm-4 col-xs-12">
+                <aside class="b-items__aside">
+                    <h2 class="s-title wow zoomInUp" style="font-size: 16px;" data-wow-delay="0.5s">REALIZA TU BÚSQUEDA</h2>
+                    <div class="b-items__aside-main wow zoomInUp" data-wow-delay="0.5s">
+                        <form method="POST" action="' . URL . 'busqueda/listado">
+                            <div class="b-items__aside-main-body">
+                                <div class="b-items__aside-main-body-item">
+                                    <label>MARCA</label>
+                                    <div>
+                                        <select name="marca" class="m-select">
+                                            <option value="" selected="">Cualquiera</option>';
+        foreach ($marcas as $item) {
+            $data .= '<option value="' . utf8_encode($item['id']) . '">' . utf8_encode($item['descripcion']) . '</option>';
+        }
+        $data .= '</select>
+                                        <span class="fa fa-caret-down"></span>
+                                    </div>
+                                </div>
+                                <div class="b-items__aside-main-body-item">
+                                    <label>RANGO DE PRECIO</label>
+                                    <div class="slider"></div>
+                                    <input type="hidden" name="min" id="minUsados" value="' . ceil($rangoPrecio['min']) . '" class="j-min" />
+                                    <input type="hidden" name="max" id="maxUsados" value="' . ceil($rangoPrecio['max']) . '" class="j-max" />
+                                </div>
+                                <div class="b-items__aside-main-body-item">
+                                    <label>TIPO DE VEHICULO</label>
+                                    <div>
+                                        <select name="tipo_vehiculo" class="m-select">
+                                            <option value="" selected="">Cualquiera</option>';
+        foreach ($tipoVehiculo as $item) {
+            $data .= '<option value="' . utf8_encode($item['id']) . '">' . utf8_encode($item['descripcion']) . '</option>';
+        }
+        $data .= '</select>
+                                        <span class="fa fa-caret-down"></span>
+                                    </div>
+                                </div>
+                                <div class="b-items__aside-main-body-item">
+                                    <label>SEDE</label>
+                                    <div>
+                                        <select name="sede" class="m-select">
+                                            <option value="" selected="">Cualquiera</option>';
+        foreach ($sede as $item) {
+            $data .= '<option value="' . utf8_encode($item['id']) . '">' . utf8_encode($item['descripcion']) . '</option>';
+        }
+        $data .= '</select>
+                                        <span class="fa fa-caret-down"></span>
+                                    </div>
+                                </div>
+                                <div class="b-items__aside-main-body-item">
+                                    <label>COMBUSTIBLE</label>
+                                    <div>
+                                        <select name="combustible" class="m-select">
+                                            <option value="" selected="">Todos</option>';
+        foreach ($combustible as $item) {
+            $data .= '<option value="' . utf8_encode($item['id']) . '">' . utf8_encode($item['descripcion']) . '</option>';
+        }
+        $data .= '  </select>
+                                        <span class="fa fa-caret-down"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <footer class="b-items__aside-main-footer">
+                                <button type="submit" class="btn m-btn">BUSCAR VEHÍCULOS<span class="fa fa-angle-right"></span></button><br />
+                            </footer>
+                        </form>
+                    </div>
+                </aside>
+            </div>';
+        return $data;
     }
 
 }

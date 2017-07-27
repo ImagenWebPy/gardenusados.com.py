@@ -12,6 +12,24 @@
         <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <?php
+        #cargamos los css de las vistas
+        if (isset($this->css)) {
+            foreach ($this->css as $css) {
+                echo '<link rel="stylesheet" href="' . URL . 'views/' . $css . '" type="text/css">';
+            }
+        }
+        if (isset($this->public_css)) {
+            foreach ($this->public_css as $public_css) {
+                echo '<link rel="stylesheet" href="' . URL . 'public/' . $public_css . '" type="text/css">';
+            }
+        }
+        if (isset($this->publicHeader_js)) {
+            foreach ($this->publicHeader_js as $public_js) {
+                echo '<script type="text/javascript" src="' . URL . 'public/' . $public_js . '"></script>';
+            }
+        }
+        ?>
     </head>
     <body class="m-index" data-scrolling-animations="true" data-equal-height=".b-auto__main-item">
         <!-- Loader -->
@@ -38,9 +56,9 @@
                             <div class="collapse navbar-collapse navbar-main-slide" id="nav">
                                 <ul class="navbar-nav-menu">
                                     <li><a href="<?= URL; ?>">Inicio</a></li>
-                                    <li><a href="#">Usados</a></li>
-                                    <li><a href="#">Saldos de Stock 0km</a></li>
-                                    <li><a href="#">Contacto</a></li>
+                                    <li><a href="<?= URL; ?>usados/listado">Usados</a></li>
+                                    <li><a href="<?= URL; ?>saldos">Saldos de Stock 0km</a></li>
+                                    <li><a href="<?= URL; ?>contacto">Contacto</a></li>
                                 </ul>
                             </div>
                         </div>

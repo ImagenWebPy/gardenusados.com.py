@@ -402,7 +402,7 @@ $listado = $helper->listadoModelosIndex();
                                                         <li><?= utf8_encode($item['transmision']); ?></li>
                                                         <li><?= utf8_encode($item['combustible']); ?></li>
                                                     </ul>
-                                                    <h5 class="b-items__cell-info-price">$29,415</h5>
+                                                    <h5 class="b-items__cell-info-price">$<?= number_format($item['precio'], 0, ',', '.'); ?></h5>
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <?php if (!empty($item['kilometraje'])): ?>
@@ -411,7 +411,7 @@ $listado = $helper->listadoModelosIndex();
                                                             <p><?= $item['kilometraje']; ?> KM</p>
                                                         </div>
                                                     <?php endif; ?>
-                                                    <a href="<?= URL; ?>/vehiculo/<?= $item['id']; ?>/<?= $helper->cleanUrl($nombre) ?>" class="btn m-btn">VER DETALLES<span class="fa fa-angle-right"></span></a>
+                                                    <a href="<?= URL; ?>vehiculo/detalle/<?= $item['id']; ?>/<?= $helper->cleanUrl($nombre) ?>" class="btn m-btn">VER DETALLES<span class="fa fa-angle-right"></span></a>
                                                 </div>
                                             </div>
                                         </div>

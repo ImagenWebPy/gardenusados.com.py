@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/wamp/www/gardenusados.com.py/models/vehiculo_model.php</file>
+            <file>file:/C:/wamp/www/gardenusados.com.py/controllers/vehiculo.php</file>
+            <file>file:/C:/wamp/www/gardenusados.com.py/views/vehiculo/listado.php</file>
+            <file>file:/C:/wamp/www/gardenusados.com.py/models/usados_model.php</file>
+            <file>file:/C:/wamp/www/gardenusados.com.py/controllers/usados.php</file>
+            <file>file:/C:/wamp/www/gardenusados.com.py/views/usados/index.php</file>
+        </group>
     </open-files>
 </project-private>

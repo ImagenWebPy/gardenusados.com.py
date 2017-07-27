@@ -1,3 +1,10 @@
+<?php
+$helper = new Helper();
+$ultimos_agregados = $helper->ultimosVehiculos();
+$sedes = $helper->getSedes();
+$horarioAtencion = $helper->getHorarioAtencion();
+$url = $helper->getUrl();
+?>
 <div class="b-info">
     <div class="container">
         <div class="row">
@@ -6,18 +13,12 @@
                     <article class="b-info__aside-article">
                         <h3>HORARIO DE ATENCIÓN</h3>
                         <div class="b-info__aside-article-item">
-                            <p>Lunes a Viernes : 8:00 - 18:00</p>
-                            <p>Sabados : 8:00 - 12:00</p>
+                            <?= $horarioAtencion; ?>
                         </div>
                     </article>
                     <article class="b-info__aside-article">
                         <h3>Acerca de Nosotros</h3>
-                        <p>Vestibulum varius od lio eget conseq
-                            uat blandit, lorem auglue comm lodo 
-                            nisl non ultricies lectus nibh mas lsa 
-                            Duis scelerisque aliquet. Ante donec
-                            libero pede porttitor dacu msan esct
-                            venenatis quis.</p>
+                        <p><a href="http://garden.com.py"><img src="<?= IMG; ?>logo.png" class="img-responsive logoSizeFooter" style="margin: 0 auto;"></a></p>
                     </article>
                     <a href="#" class="btn m-btn">LEER MÁS<span class="fa fa-angle-right"></span></a>
                 </aside>
@@ -25,82 +26,40 @@
             <div class="col-md-3 col-xs-6">
                 <div class="b-info__latest">
                     <h3>ÚLTIMOS VEHICULOS AGREGADOS</h3>
-                    <div class="b-info__latest-article wow zoomInUp" data-wow-delay="0.3s">
-                        <div class="b-info__latest-article-photo m-audi"></div>
-                        <div class="b-info__latest-article-info">
-                            <h6><a href="#">MERCEDES-AMG GT S</a></h6>
-                            <p><span class="fa fa-tachometer"></span> 35,000 KM</p>
+                    <?php foreach ($ultimos_agregados as $item): ?>
+                        <?php
+                        $version = (!empty($item['version'])) ? ' ' . $item['version'] : '';
+                        $nombre = utf8_encode($item['marca']) . ' ' . utf8_encode($item['modelo']) . $version;
+                        ?>
+                        <div class="b-info__latest-article wow zoomInUp" data-wow-delay="0.3s">
+                            <div class="b-info__latest-article-photo"><img src="<?= PUBLIC_FOLDER; ?>/archivos/<?= $item['imagen']; ?>" class="img-responsive"></div>
+                            <div class="b-info__latest-article-info">
+                                <h6><a href="<?= URL; ?>/vehiculo/<?= $item['id']; ?>/<?= $helper->cleanUrl($nombre) ?>"><?= $nombre; ?></a></h6>
+                                <?php if (!empty($item['kilometraje'])): ?>
+                                    <div class="b-items__cell-info-km">
+                                        <span class="fa fa-tachometer"></span>
+                                        <p><?= $item['kilometraje']; ?> KM</p>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                    </div>
-                    <div class="b-info__latest-article wow zoomInUp" data-wow-delay="0.3s">
-                        <div class="b-info__latest-article-photo m-audiSpyder"></div>
-                        <div class="b-info__latest-article-info">
-                            <h6><a href="#">AUDI R8 SPYDER V-8</a></h6>
-                            <p><span class="fa fa-tachometer"></span> 35,000 KM</p>
-                        </div>
-                    </div>
-                    <div class="b-info__latest-article wow zoomInUp" data-wow-delay="0.3s">
-                        <div class="b-info__latest-article-photo m-aston"></div>
-                        <div class="b-info__latest-article-info">
-                            <h6><a href="#">ASTON MARTIN VANTAGE</a></h6>
-                            <p><span class="fa fa-tachometer"></span> 35,000 KM</p>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-            <div class="col-md-3 col-xs-6">
-                <div class="b-info__twitter">
-                    <h3>from twitter</h3>
-                    <div class="b-info__twitter-article wow zoomInUp" data-wow-delay="0.3s">
-                        <div class="b-info__twitter-article-icon"><span class="fa fa-twitter"></span></div>
-                        <div class="b-info__twitter-article-content">
-                            <p>Duis scelerisque aliquet ante donec libero pede porttitor dacu</p>
-                            <span>20 minutes ago</span>
-                        </div>
-                    </div>
-                    <div class="b-info__twitter-article wow zoomInUp" data-wow-delay="0.3s">
-                        <div class="b-info__twitter-article-icon"><span class="fa fa-twitter"></span></div>
-                        <div class="b-info__twitter-article-content">
-                            <p>Duis scelerisque aliquet ante donec libero pede porttitor dacu</p>
-                            <span>20 minutes ago</span>
-                        </div>
-                    </div>
-                    <div class="b-info__twitter-article wow zoomInUp" data-wow-delay="0.3s">
-                        <div class="b-info__twitter-article-icon"><span class="fa fa-twitter"></span></div>
-                        <div class="b-info__twitter-article-content">
-                            <p>Duis scelerisque aliquet ante donec libero pede porttitor dacu</p>
-                            <span>20 minutes ago</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-xs-6">
+            <div class="col-md-3 col-xs-6 pull-right">
                 <address class="b-info__contacts wow zoomInUp" data-wow-delay="0.3s">
                     <p>Contactanos</p>
-                    <div class="b-info__contacts-item">
-                        <span class="fa fa-map-marker"></span>
-                        <em>Garden Usados Asunción<br>
-                            Tel. (+595 21) 237 7111</em>
-                    </div>
-                    <div class="b-info__contacts-item">
-                        <span class="fa fa-map-marker"></span>
-                        <em>Garden Usados Asunción TEMA<br>
-                            Tel. (+595 21) 237 7101</em>
-                    </div>
-                    <div class="b-info__contacts-item">
-                        <span class="fa fa-map-marker"></span>
-                        <em>Garden Usados Ciudad del Este<br>
-                            Tel. (+595 21) 237 6909</em>
-                    </div>
-                    <div class="b-info__contacts-item">
-                        <span class="fa fa-map-marker"></span>
-                        <em>Garden Usados Coronel Oviedo<br>
-                            Tel. (+595 521) 201 250</em>
-                    </div>
+                    <?php foreach ($sedes as $item): ?>
+                        <div class="b-info__contacts-item">
+                            <span class="fa fa-map-marker"></span>
+                            <em><?= utf8_encode($item['descripcion']) . ' ' . utf8_encode($item['ciudad']); ?><br>
+                                Tel. <?= $item['telefono']; ?></em>
+                        </div>
+                    <?php endforeach; ?>
                 </address>
-                <address class="b-info__map">
-                    <a href="#">Abrir en el Mapa</a>
-                </address>
+                <!--                <address class="b-info__map">
+                                    <a href="#">Abrir en el Mapa</a>
+                                </address>-->
             </div>
         </div>
     </div>
@@ -119,10 +78,10 @@
                 <div class="b-footer__content wow fadeInRight" data-wow-delay="0.3s">
                     <nav class="b-footer__content-nav">
                         <ul>
-                            <li><a href="#">Inicio</a></li>
-                            <li><a href="#">Usados</a></li>
-                            <li><a href="#">Saldos de Stock 0km</a></li>
-                            <li><a href="#">Contacto</a></li>
+                            <li><a href="<?= URL; ?>">Inicio</a></li>
+                            <li><a href="<?= URL; ?>usados">Usados</a></li>
+                            <li><a href="<?= URL; ?>saldos">Saldos de Stock 0km</a></li>
+                            <li><a href="<?= URL; ?>contacto">Contacto</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -150,6 +109,41 @@
 <script src="<?= JS; ?>wow.min.js"></script>
 <script src="<?= JS; ?>jquery.placeholder.min.js"></script>
 <script src="<?= JS; ?>theme.js"></script>
+<?php
+#cargamos los js de las vistas
+if (isset($this->external_js)) {
+    foreach ($this->external_js as $external) {
+        echo '<script async defer src="' . $external . '"></script>';
+    }
+}
+if (isset($this->public_js)) {
+    foreach ($this->public_js as $public_js) {
+        echo '<script type="text/javascript" src="' . URL . 'public/' . $public_js . '"></script>';
+    }
+}
+if (isset($this->js)) {
+    foreach ($this->js as $js) {
+        echo '<script type="text/javascript" src="' . URL . 'views/' . $js . '"></script>';
+    }
+}
+?>
+<?php
+if (!empty($url)):
+    if (($url[0] == 'vehiculo') && ($url[1] == 'detalle')):
+        ?>
+        <?php
+        $enlace = URL . implode('/', $url);
+        ?>
+        <script>
+            $("#share").jsSocials({
+                shares: ["email", "twitter", "facebook", "googleplus", "pinterest"],
+                url: "<?= $enlace ?>"
+            });
+        </script>
+        <?php
+    endif;
+endif;
+?>
 </body>
 <!-- Mirrored from templines.rocks/html/sokolcov/auto-club/home.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Jul 2017 14:12:31 GMT -->
 </html>
