@@ -7,18 +7,17 @@ class Busqueda extends Controller {
     }
 
     public function listado() {
-        var_dump($_POST);
-        die();
         $data = '';
         if (!empty($_POST)) {
             $data = array(
                 'marca' => $this->helper->cleanInput($_POST['marca']),
-                'min' => $this->helper->cleanInput($_POST['min']),
-                'max' => $this->helper->cleanInput($_POST['max']),
+                'min' => $this->helper->cleanInput($_POST['realMinValue']),
+                'max' => $this->helper->cleanInput($_POST['realMaxValue']),
                 'tipo_vehiculo' => $this->helper->cleanInput($_POST['tipo_vehiculo']),
                 'sede' => $this->helper->cleanInput($_POST['sede']),
                 'combustible' => $this->helper->cleanInput($_POST['combustible'])
             );
+            Session::set('busqueda', $data);
         }
         $url = $this->helper->getUrl();
         if (!empty($url[2])) {
@@ -26,9 +25,11 @@ class Busqueda extends Controller {
         } else {
             $pagina = 1;
         }
-        $this->view->listado = $this->model->listado($data, $pagina);
-        var_dump($this->view->listado);
-        $this->view->title = 'Saldos de Stock 0km';
+        $this->view->listado = $this->model->listado($pagina);
+        $this->view->title = 'Busqueda';
+        $this->view->render('header');
+        $this->view->render('busqueda/index');
+        $this->view->render('footer');
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Usados_Model extends Model {
+class Saldos_Model extends Model {
 
     function __construct() {
         parent::__construct();
@@ -33,7 +33,7 @@ class Usados_Model extends Model {
                                 LEFT JOIN combustible com on com.id = v.id_combustible
                                 LEFT JOIN vehiculo_img vi on vi.id_vehiculo = v.id
                                 where vi.principal = 1
-                                and c.id = 1
+                                and c.id = 2
                                 ORDER BY v.id desc
                                 LIMIT $pageLimit, $setLimit");
         $condicion = "from vehiculo v
@@ -43,10 +43,10 @@ class Usados_Model extends Model {
                                 LEFT JOIN combustible com on com.id = v.id_combustible
                                 LEFT JOIN vehiculo_img vi on vi.id_vehiculo = v.id
                                 where vi.principal = 1
-                                and c.id = 1";
+                                and c.id = 2";
         $data = array(
             'listado' => $sql,
-            'paginador' => $this->helper->mostrarPaginador($setLimit, $page, 'vehiculo', 'usados/listado', $condicion)
+            'paginador' => $this->helper->mostrarPaginador($setLimit, $page, 'vehiculo', 'saldos/listado',$condicion)
         );
         return $data;
     }

@@ -213,8 +213,12 @@ class Helper {
      * @param string $section (ruta del mvc a paginar)
      * @return string
      */
-    public function mostrarPaginador($per_page, $page, $table, $section) {
-        $query = $this->db->select("SELECT COUNT(*) as totalCount FROM $table where estado = 1");
+    public function mostrarPaginador($per_page, $page, $table, $section, $condicion = NULL) {
+        if (!empty($condicion)) {
+            $query = $this->db->select("SELECT COUNT(*) as totalCount $condicion");
+        } else {
+            $query = $this->db->select("SELECT COUNT(*) as totalCount FROM $table where estado = 1");
+        }
         $total = $query[0]['totalCount'];
         $adjacents = "2";
 
@@ -367,7 +371,7 @@ class Helper {
                 <aside class="b-items__aside">
                     <h2 class="s-title wow zoomInUp" style="font-size: 16px;" data-wow-delay="0.5s">REALIZA TU BÚSQUEDA</h2>
                     <div class="b-items__aside-main wow zoomInUp" data-wow-delay="0.5s">
-                        <form method="POST" action="' . URL . 'busqueda/listado">
+                        <form method="POST" action="' . URL . 'busqueda/listado" id="frmBuscarVehiculo">
                             <div class="b-items__aside-main-body">
                                 <div class="b-items__aside-main-body-item">
                                     <label>MARCA</label>
@@ -386,6 +390,8 @@ class Helper {
                                     <div class="slider"></div>
                                     <input type="hidden" name="min" id="minUsados" value="' . ceil($rangoPrecio['min']) . '" class="j-min" />
                                     <input type="hidden" name="max" id="maxUsados" value="' . ceil($rangoPrecio['max']) . '" class="j-max" />
+                                    <input type="hidden" name="realMinValue" id="realMinValue" value=""/>
+                                    <input type="hidden" name="realMaxValue" id="realMaxValue" value=""/>
                                 </div>
                                 <div class="b-items__aside-main-body-item">
                                     <label>TIPO DE VEHICULO</label>
@@ -425,7 +431,7 @@ class Helper {
                                 </div>
                             </div>
                             <footer class="b-items__aside-main-footer">
-                                <button type="submit" class="btn m-btn">BUSCAR VEHÍCULOS<span class="fa fa-angle-right"></span></button><br />
+                                <button type="submit" class="btn m-btn" id="btn-BuscarVehiculos">BUSCAR VEHÍCULOS<span class="fa fa-angle-right"></span></button><br />
                             </footer>
                         </form>
                     </div>

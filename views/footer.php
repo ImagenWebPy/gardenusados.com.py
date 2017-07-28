@@ -90,7 +90,7 @@ $url = $helper->getUrl();
     </div>
 </footer><!--b-footer-->
 <!--Main-->   
-<script src="<?= JS; ?>jquery-1.11.3.min.js"></script>
+
 <script src="<?= JS; ?>jquery-ui.min.js"></script>
 <script src="<?= JS; ?>bootstrap.min.js"></script>
 <script src="<?= JS; ?>modernizr.custom.js"></script>

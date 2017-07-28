@@ -30,6 +30,7 @@
             }
         }
         ?>
+        <script src="<?= JS; ?>jquery-1.11.3.min.js"></script>
     </head>
     <body class="m-index" data-scrolling-animations="true" data-equal-height=".b-auto__main-item">
         <!-- Loader -->
@@ -57,7 +58,7 @@
                                 <ul class="navbar-nav-menu">
                                     <li><a href="<?= URL; ?>">Inicio</a></li>
                                     <li><a href="<?= URL; ?>usados/listado">Usados</a></li>
-                                    <li><a href="<?= URL; ?>saldos">Saldos de Stock 0km</a></li>
+                                    <li><a href="<?= URL; ?>saldos/listado">Saldos de Stock 0km</a></li>
                                     <li><a href="<?= URL; ?>contacto">Contacto</a></li>
                                 </ul>
                             </div>

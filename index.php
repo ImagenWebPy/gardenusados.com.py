@@ -22,6 +22,8 @@ function __autoload($class) {
     require LIBS . $class . ".php";
 }
 
+Session::init();
+
 // Load the Bootstrap!
 $bootstrap = new Bootstrap();
 
