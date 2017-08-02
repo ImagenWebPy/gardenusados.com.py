@@ -35,6 +35,7 @@ define('HASH_PASSWORD_KEY', '!@123456789ABCDEFGHIJKLMNOPRSTWYZ[¿]{?}<->');
 
 //Constantes varias
 define('SITE_TITLE', 'Garden Usados :: ');
+define('ADMIN_TITLE', 'Administrador Usados :: ');
 define('TITLE_ADMIN', 'Institucional Admin :: ');
 define('CSS', URL . 'public/css/');
 define('JS', URL . 'public/js/');

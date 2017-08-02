@@ -33,7 +33,7 @@ class Helper {
         $String = str_replace("ý", "y", $String);
 
         $String = str_replace("'", "", $String);
-        $String = str_replace(".", "_", $String);
+        //$String = str_replace(".", "_", $String);
         $String = str_replace(" ", "_", $String);
         $String = str_replace("/", "_", $String);
 
@@ -337,8 +337,18 @@ class Helper {
         return $sql;
     }
 
-    public function getMarcas() {
-        $sql = $this->db->select("select id, descripcion from marca where estado = 1 ORDER BY descripcion ASC");
+    public function getMarcas($filtro = NULL) {
+        if (empty($filtro)) {
+            $sql = $this->db->select("select id, descripcion from marca where estado = 1 ORDER BY descripcion ASC");
+        } else {
+            $sql = $this->db->select("select m.id, 
+                                            m.descripcion 
+                                    from marca m
+                                    RIGHT JOIN modelo mo on mo.id_marca = m.id
+                                    where m.estado = 1 
+                                    GROUP BY m.descripcion, m.id
+                                    ORDER BY m.descripcion ASC");
+        }
         return $sql;
     }
 
@@ -351,8 +361,17 @@ class Helper {
         return $data;
     }
 
-    public function getTipoVehiculo() {
-        $sql = $this->db->select("select id, descripcion from tipo_vehiculo where estado = 1");
+    public function getTipoVehiculo($filtro = NULL) {
+        if (empty($filtro)) {
+            $sql = $this->db->select("select id, descripcion, img, img_hover from tipo_vehiculo where estado = 1 ORDER BY tv.descripcion ASC");
+        } else {
+            $sql = $this->db->select("select tv.id, tv.descripcion, tv.img, tv.img_hover 
+                                    from tipo_vehiculo tv
+                                    RIGHT JOIN vehiculo v on v.id_tipo_vehiculo = tv.id
+                                    where tv.estado = 1
+                                    GROUP BY tv.id, tv.descripcion
+                                    ORDER BY tv.descripcion ASC");
+        }
         return $sql;
     }
 
@@ -362,9 +381,9 @@ class Helper {
     }
 
     public function loadBuscador() {
-        $marcas = $this->getMarcas();
+        $marcas = $this->getMarcas(1);
         $rangoPrecio = $this->getMinMaxPrecio();
-        $tipoVehiculo = $this->getTipoVehiculo();
+        $tipoVehiculo = $this->getTipoVehiculo(1);
         $sede = $this->getSedes();
         $combustible = $this->getTipoCombusitble();
         $data = '<div class="col-lg-3 col-sm-4 col-xs-12">
@@ -411,7 +430,7 @@ class Helper {
                                         <select name="sede" class="m-select">
                                             <option value="" selected="">Cualquiera</option>';
         foreach ($sede as $item) {
-            $data .= '<option value="' . utf8_encode($item['id']) . '">' . utf8_encode($item['descripcion']) . '</option>';
+            $data .= '<option value="' . utf8_encode($item['id']) . '">' . utf8_encode($item['descripcion']) . ' - ' . utf8_encode($item['ciudad']) . '</option>';
         }
         $data .= '</select>
                                         <span class="fa fa-caret-down"></span>
@@ -438,6 +457,89 @@ class Helper {
                 </aside>
             </div>';
         return $data;
+    }
+
+    public function getPermisosUsuario($id) {
+        $sql = $this->db->select("SELECT aup.id_permiso, ap.descripcion as permiso
+                                FROM admin_usuario_permiso aup 
+                                LEFT JOIN admin_permiso ap on ap.id = aup.id_permiso
+                                where id_usuario = $id;");
+        return $sql[0];
+    }
+
+    public function getCantidadVehiculosTipo($tipo) {
+        $sql = $this->db->select("select count(*) as cantidad from vehiculo where id_condicion = $tipo");
+        return $sql[0]['cantidad'];
+    }
+
+    function redimensionar($file, $nameFile, $ancho, $alto) {
+        # se obtene la dimension y tipo de imagen 
+        $datos = getimagesize($file);
+
+        $ancho_orig = $datos[0]; # Anchura de la imagen original 
+        $alto_orig = $datos[1];    # Altura de la imagen original 
+        $tipo = $datos[2];
+
+        if ($tipo == 1) { # GIF 
+            if (function_exists("imagecreatefromgif"))
+                $img = imagecreatefromgif($file);
+            else
+                return false;
+        }
+        else if ($tipo == 2) { # JPG 
+            if (function_exists("imagecreatefromjpeg"))
+                $img = imagecreatefromjpeg($file);
+            else
+                return false;
+        }
+        else if ($tipo == 3) { # PNG 
+            if (function_exists("imagecreatefrompng"))
+                $img = imagecreatefrompng($file);
+            else
+                return false;
+        }
+
+        # Se calculan las nuevas dimensiones de la imagen 
+        if ($ancho_orig > $alto_orig) {
+            $ancho_dest = $ancho;
+            $alto_dest = ($ancho_dest / $ancho_orig) * $alto_orig;
+        } else {
+            $alto_dest = $alto;
+            $ancho_dest = ($alto_dest / $alto_orig) * $ancho_orig;
+        }
+
+        // imagecreatetruecolor, solo estan en G.D. 2.0.1 con PHP 4.0.6+ 
+        $img2 = @imagecreatetruecolor($ancho_dest, $alto_dest) or $img2 = imagecreate($ancho_dest, $alto_dest);
+
+        // Redimensionar 
+        // imagecopyresampled, solo estan en G.D. 2.0.1 con PHP 4.0.6+ 
+        @imagecopyresampled($img2, $img, 0, 0, 0, 0, $ancho_dest, $alto_dest, $ancho_orig, $alto_orig) or imagecopyresized($img2, $img, 0, 0, 0, 0, $ancho_dest, $alto_dest, $ancho_orig, $alto_orig);
+
+        // Crear fichero nuevo, según extensión. 
+        if ($tipo == 1) // GIF 
+            if (function_exists("imagegif"))
+                imagegif($img2, "public/archivos/$nameFile", 60);
+            else
+                return false;
+
+        if ($tipo == 2) // JPG 
+            if (function_exists("imagejpeg"))
+                imagejpeg($img2, "public/archivos/$nameFile", 60);
+            else
+                return false;
+
+        if ($tipo == 3)  // PNG 
+            if (function_exists("imagepng"))
+                imagepng($img2, "public/archivos/$nameFile", 6);
+            else
+                return false;
+
+        return true;
+    }
+
+    public function verificaEstado($tabla, $id, $campo = NULL) {
+        $sql = $this->db->select("select estado from $tabla where id = $id");
+        return $sql[0]['estado'];
     }
 
 }
