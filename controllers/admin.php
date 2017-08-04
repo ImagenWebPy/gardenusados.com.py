@@ -28,6 +28,17 @@ class Admin extends Controller {
             unset($_SESSION['message']);
     }
 
+    public function tipo_vehiculos() {
+        $this->view->public_css = array("admin/plugins/datatables/dataTables.bootstrap.css", "admin/plugins/html5fileupload/html5fileupload.css");
+        $this->view->public_js = array("admin/plugins/datatables/jquery.dataTables.min.js", "admin/plugins/datatables/dataTables.bootstrap.min.js", "admin/plugins/html5fileupload/html5fileupload.min.js");
+        $this->view->title = 'Tipos de Vehículos';
+        $this->view->render('admin/header');
+        $this->view->render('admin/tipo_vehiculos/index');
+        $this->view->render('admin/footer');
+        if (!empty($_SESSION['message']))
+            unset($_SESSION['message']);
+    }
+
     public function listadoDTMarcas() {
         header('Content-type: application/json; charset=utf-8');
         $data = $this->model->listadoDTMarcas();
@@ -105,6 +116,12 @@ class Admin extends Controller {
         $data = $this->model->listadoDTModelos();
         echo $data;
     }
+    
+    public function listadoDTTipoVehiculos() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = $this->model->listadoDTTipoVehiculos();
+        echo $data;
+    }
 
     public function getEditarModelo() {
         header('Content-type: application/json; charset=utf-8');
@@ -173,9 +190,26 @@ class Admin extends Controller {
             unset($_SESSION['message']);
     }
 
+    public function traccion() {
+        $this->view->public_css = array("admin/plugins/datatables/dataTables.bootstrap.css");
+        $this->view->public_js = array("admin/plugins/datatables/jquery.dataTables.min.js", "admin/plugins/datatables/dataTables.bootstrap.min.js");
+        $this->view->title = 'Tracción';
+        $this->view->render('admin/header');
+        $this->view->render('admin/traccion/index');
+        $this->view->render('admin/footer');
+        if (!empty($_SESSION['message']))
+            unset($_SESSION['message']);
+    }
+
     public function listadoDTCondicion() {
         header('Content-type: application/json; charset=utf-8');
         $data = $this->model->listadoDTCondicion();
+        echo $data;
+    }
+
+    public function listadoDTTraccion() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = $this->model->listadoDTTraccion();
         echo $data;
     }
 
@@ -188,6 +222,15 @@ class Admin extends Controller {
         echo $datos;
     }
 
+    public function getEditarTraccion() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = array(
+            'id' => $this->helper->cleanInput($_POST['id'])
+        );
+        $datos = $this->model->getEditarTraccion($data);
+        echo $datos;
+    }
+
     public function saveEditarCondicion() {
         $data = array(
             'id' => $this->helper->cleanInput($_POST['id']),
@@ -196,6 +239,16 @@ class Admin extends Controller {
         );
         $this->model->saveEditarCondicion($data);
         header('Location: ' . URL . 'admin/condicion');
+    }
+
+    public function saveEditarTraccion() {
+        $data = array(
+            'id' => $this->helper->cleanInput($_POST['id']),
+            'descripcion' => $this->helper->cleanInput($_POST['descripcion']),
+            'estado' => (!empty($_POST['estado'])) ? $this->helper->cleanInput($_POST['estado']) : 0
+        );
+        $this->model->saveEditarTraccion($data);
+        header('Location: ' . URL . 'admin/traccion');
     }
 
 }

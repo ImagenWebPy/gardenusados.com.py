@@ -324,6 +324,60 @@ class Admin_Model extends Model {
         return $json;
     }
 
+    public function listadoDTTraccion() {
+        $sql = $this->db->select("select * from tipo_traccion");
+        $datos = array();
+        foreach ($sql as $item) {
+            $id = $item['id'];
+            if ($item['estado'] == 1) {
+                $estado = '<a class="pointer btnCambiarEstado" data-id="' . $id . '" data-estado="1"><span class="label label-success">Activo</span></a>';
+            } else {
+                $estado = '<a class="pointer btnCambiarEstado" data-id="' . $id . '" data-estado="0"><span class="label label-danger">Inactivo</span></a>';
+            }
+            $btnEditar = '<a class="btn btn-app editDTTraccion pointer btnSmall" data-id="' . $id . '"><i class="fa fa-edit"></i> Editar </a>';
+            array_push($datos, array(
+                'descripcion' => utf8_encode($item['descripcion']),
+                'estado' => $estado,
+                'editar' => $btnEditar
+            ));
+        }
+        $json = '{"data": ' . json_encode($datos) . '}';
+        return $json;
+    }
+
+    public function listadoDTTipoVehiculos() {
+        $sql = $this->db->select("select * from tipo_vehiculo");
+        $datos = array();
+        foreach ($sql as $item) {
+            $id = $item['id'];
+            if (!empty($item['img'])) {
+                $img = '<img src="' . IMG . 'siluetas/' . $item['img'] . '" alt="' . utf8_encode($item['descripcion']) . '">';
+            } else {
+                $img = '<img style="width: 50%;" src="' . IMG . 'logo/no-disponible.jpg" alt="' . utf8_encode($sql[0]['descripcion']) . '">';
+            }
+            if (!empty($item['img'])) {
+                $img_hover = '<img src="' . IMG . 'siluetas/' . $item['img_hover'] . '" alt="' . utf8_encode($item['descripcion']) . '">';
+            } else {
+                $img_hover = '<img style="width: 50%;" src="' . IMG . 'logo/no-disponible.jpg" alt="' . utf8_encode($sql[0]['descripcion']) . '">';
+            }
+            if ($item['estado'] == 1) {
+                $estado = '<a class="pointer btnCambiarEstado" data-id="' . $id . '" data-estado="1"><span class="label label-success">Activo</span></a>';
+            } else {
+                $estado = '<a class="pointer btnCambiarEstado" data-id="' . $id . '" data-estado="0"><span class="label label-danger">Inactivo</span></a>';
+            }
+            $btnEditar = '<a class="btn btn-app editDTTraccion pointer btnSmall" data-id="' . $id . '"><i class="fa fa-edit"></i> Editar </a>';
+            array_push($datos, array(
+                'tipo_vehiculo' => utf8_encode($item['descripcion']),
+                'imagen' => $img,
+                'imagen_hover' => $img_hover,
+                'estado' => $estado,
+                'editar' => $btnEditar
+            ));
+        }
+        $json = '{"data": ' . json_encode($datos) . '}';
+        return $json;
+    }
+
     public function getEditarCondicion($data) {
         $id = $data['id'];
         $sql = $this->db->select("select * from condicion where id = $id");
@@ -335,6 +389,42 @@ class Admin_Model extends Model {
             <!-- /.box-header -->
             <!-- form start -->
             <form role="form" action="' . URL . 'admin/saveEditarCondicion" method="POST" enctype="multipart/form-data">
+              <input type="hidden" value="' . $sql[0]['id'] . '" name="id">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Condicion</label>
+                  <input type="text" name="descripcion" class="form-control" value="' . utf8_encode($sql[0]['descripcion']) . '" placeholder="Ingrese la condicion">
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="1" name="estado" ' . $checkedEstado . '> Estado
+                  </label>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary btn-block">Guardar Cambios</button>
+              </div>
+            </form>
+          </div>';
+        $datos = array(
+            'titulo' => utf8_encode($sql[0]['descripcion']),
+            'contenido' => $form
+        );
+        return json_encode($datos);
+    }
+
+    public function getEditarTraccion($data) {
+        $id = $data['id'];
+        $sql = $this->db->select("select * from tipo_traccion where id = $id");
+        $checkedEstado = ($sql[0]['estado'] == 1) ? 'checked' : '';
+        $form = '<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Modificar Datos</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" action="' . URL . 'admin/saveEditarTraccion" method="POST" enctype="multipart/form-data">
               <input type="hidden" value="' . $sql[0]['id'] . '" name="id">
               <div class="box-body">
                 <div class="form-group">
@@ -376,6 +466,24 @@ class Admin_Model extends Model {
         Session::set('message', array(
             'type' => 'success',
             'mensaje' => 'Se ha actualizado correctamente la condición ' . $data['descripcion']));
+    }
+
+    public function saveEditarTraccion($data) {
+        $id = $data['id'];
+        $sqlEstado = $this->helper->verificaEstado('condicion', $id);
+        if ($data['estado'] != $sqlEstado) {
+            $estado = (!empty($sqlEstado)) ? 0 : 1;
+        } else {
+            $estado = $data['estado'];
+        }
+        $update = array(
+            "descripcion" => utf8_decode($data['descripcion']),
+            "estado" => $estado
+        );
+        $this->db->update('tipo_traccion', $update, "id = $id");
+        Session::set('message', array(
+            'type' => 'success',
+            'mensaje' => 'Se ha actualizado correctamente el tipo de tracción ' . $data['descripcion']));
     }
 
 }
