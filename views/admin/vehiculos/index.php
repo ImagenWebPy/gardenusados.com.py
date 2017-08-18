@@ -1,18 +1,20 @@
 <?php
 $helper = new Helper();
 ?>
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Condición
+            Vehículos
             <small>Listado</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?= URL; ?>admin/"><i class="fa fa-dashboard"></i> Inicio</a></li>
-            <li class="active">Condición</li>
+            <li class="active">Vehículos</li>
         </ol>
     </section>
+
     <!-- Main content -->
     <section class="content">
         <?php
@@ -24,16 +26,23 @@ $helper = new Helper();
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Listado de Condiciones</h3>
+                        <h3 class="box-title">Listado de Vehículos</h3>
+                        <div class="col-xs-6 pull-right">
+                            <button type="button" class="btn btn-block btn-primary btnAgregarMarca">Agregar Vehículo</button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table class="table table-bordered table-striped" id="tblCondicion">
+                        <table class="table table-bordered table-striped" id="tblVehiculos">
                             <thead>
                                 <tr>
-                                    <th>Descripción</th>
+                                    <th>Fecha</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Version</th>
+                                    <th>Precio</th>
+                                    <th>Sede</th>
                                     <th>Estado</th>
-                                    <th>Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,9 +50,12 @@ $helper = new Helper();
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Descripción</th>
+                                    <th>Fecha</th>
+                                    <th>Modelo</th>
+                                    <th>Version</th>
+                                    <th>Precio</th>
+                                    <th>Sede</th>
                                     <th>Estado</th>
-                                    <th>Editar</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -56,11 +68,13 @@ $helper = new Helper();
         </div>
         <!-- /.row -->
     </section>
+    <!-- /.content -->
 </div>
-<script>
+<!-- /.content-wrapper -->
+<script type="text/javascript">
     $(function () {
-        $("#tblCondicion").DataTable({
-            //"aaSorting": [[1, "asc"]],
+        $("#tblVehiculos").DataTable({
+            "aaSorting": [[0, "desc"]],
             "paging": true,
             "orderCellsTop": true,
             //"scrollX": true,
@@ -68,26 +82,28 @@ $helper = new Helper();
             "fixedColumns": true,
             //"iDisplayLength": 50,
             "ajax": {
-                "url": "<?= URL ?>admin/listadoDTCondicion/",
+                "url": "<?= URL ?>admin/listadoDTVehiculos/",
                 "type": "post"
             },
             "columns": [
-                {"data": "descripcion"},
-                {"data": "estado"},
-                {"data": "editar"}
+                {"data": "fecha"},
+                {"data": "marca"},
+                {"data": "modelo"},
+                {"data": "version"},
+                {"data": "precio"},
+                {"data": "sede"},
+                {"data": "estado"}
             ],
             "language": {
                 "url": "<?= URL ?>public/language/Spanish.json"
             }
         });
-        $(document).on("click", ".editDTCondicion", function (e) {
+        $(document).on("click", ".btnAgregarMarca", function (e) {
             if (e.handled !== true) // This will prevent event triggering more then once
             {
-                var id = $(this).attr("data-id");
                 $.ajax({
-                    url: "<?= URL; ?>admin/getEditarCondicion",
+                    url: "<?= URL; ?>admin/modalAgregarVehiculo",
                     type: "POST",
-                    data: {id: id},
                     dataType: "json"
                 }).done(function (data) {
                     $(".genericModal .modal-header").removeClass("modal-header").addClass("modal-header bg-primary");

@@ -16,24 +16,23 @@ class Vehiculo_Model extends Model {
         $pageLimit = ($setLimit * $page) - $setLimit;
         $sql = $this->db->select("select v.id,
                                         m.descripcion as marca,
-                                        mo.descripcion as modelo,
-                                        v.version, 
-                                        v.ano, 
+                                        v.modelo,
+                                        v.version,
+                                        v.ano,
                                         v.transmision,
                                         v.precio,
                                         v.fecha,
-                                        c.descripcion as condicion,
-                                        com.descripcion as combustible,
+                                        c.descripcion AS condicion,
+                                        com.descripcion AS combustible,
                                         vi.imagen,
                                         v.kilometraje
-                                from vehiculo v
-                                LEFT JOIN modelo mo on mo.id = v.id_modelo
-                                LEFT JOIN marca m on m.id = mo.id_marca
-                                LEFT JOIN condicion c on c.id = v.id_condicion
-                                LEFT JOIN combustible com on com.id = v.id_combustible
-                                LEFT JOIN vehiculo_img vi on vi.id_vehiculo = v.id
-                                where vi.principal = 1
-                                ORDER BY v.id desc
+                                FROM vehiculo v
+                                LEFT JOIN marca m ON m.id = v.id_marca
+                                LEFT JOIN condicion c ON c.id = v.id_condicion
+                                LEFT JOIN combustible com ON com.id = v.id_combustible
+                                LEFT JOIN vehiculo_img vi ON vi.id_vehiculo = v.id
+                                WHERE vi.principal = 1
+                                ORDER BY v.id DESC
                                 LIMIT $pageLimit, $setLimit");
         $data = array(
             'listado' => $sql,
@@ -43,8 +42,9 @@ class Vehiculo_Model extends Model {
     }
 
     public function datosVehiculo($id) {
-        $sqlDatos = $this->db->select("SELECT m.descripcion AS marca,
-                                              mo.descripcion AS modelo,
+        $sqlDatos = $this->db->select("SELECT v.id,
+                                              m.descripcion as marca,
+                                              v.modelo,
                                               v.version,
                                               v.ano,
                                               v.transmision,
@@ -66,8 +66,7 @@ class Vehiculo_Model extends Model {
                                               v.adicionales,
                                               e.descripcion as estado
                                         FROM vehiculo v
-                                        LEFT JOIN modelo mo ON mo.id = v.id_modelo
-                                        LEFT JOIN marca m ON m.id = mo.id_marca
+                                        LEFT JOIN marca m ON m.id = v.id_marca
                                         LEFT JOIN condicion c ON c.id = v.id_condicion
                                         LEFT JOIN combustible com ON com.id = v.id_combustible
                                         LEFT JOIN tipo_vehiculo tv on tv.id = v.id_tipo_vehiculo

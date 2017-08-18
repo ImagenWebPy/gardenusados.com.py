@@ -10,10 +10,63 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-07-28 18:13:30
+Date: 2017-08-18 18:25:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `admin_permiso`
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_permiso`;
+CREATE TABLE `admin_permiso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(145) DEFAULT NULL,
+  `estado` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_permiso
+-- ----------------------------
+INSERT INTO `admin_permiso` VALUES ('1', 'Administrador', '1');
+INSERT INTO `admin_permiso` VALUES ('2', 'Editor', '1');
+INSERT INTO `admin_permiso` VALUES ('3', 'Redactor', '1');
+
+-- ----------------------------
+-- Table structure for `admin_usuario`
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_usuario`;
+CREATE TABLE `admin_usuario` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(145) DEFAULT NULL,
+  `email` varchar(145) DEFAULT NULL,
+  `password` varchar(145) DEFAULT NULL,
+  `imagen` varchar(145) DEFAULT NULL,
+  `estado` int(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_usuario
+-- ----------------------------
+INSERT INTO `admin_usuario` VALUES ('1', 'Raúl Ramírez', 'raul.ramirez@garden.com.py', '4530ad981d5c02d9cb0456c360fae460803922f556c56022e1dc0187c16ced50', null, '1');
+
+-- ----------------------------
+-- Table structure for `admin_usuario_permiso`
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_usuario_permiso`;
+CREATE TABLE `admin_usuario_permiso` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) unsigned NOT NULL,
+  `id_permiso` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_usuario_permiso
+-- ----------------------------
+INSERT INTO `admin_usuario_permiso` VALUES ('1', '1', '1');
 
 -- ----------------------------
 -- Table structure for `combustible`
@@ -30,7 +83,7 @@ CREATE TABLE `combustible` (
 -- Records of combustible
 -- ----------------------------
 INSERT INTO `combustible` VALUES ('1', 'Nafta', '1');
-INSERT INTO `combustible` VALUES ('2', 'Diesel', '1');
+INSERT INTO `combustible` VALUES ('2', '0km', '1');
 INSERT INTO `combustible` VALUES ('3', 'Flex', '1');
 
 -- ----------------------------
@@ -66,7 +119,7 @@ CREATE TABLE `estado` (
 -- ----------------------------
 INSERT INTO `estado` VALUES ('1', 'Mostrar', '1');
 INSERT INTO `estado` VALUES ('2', 'Ocultar', '1');
-INSERT INTO `estado` VALUES ('3', 'Vendido', '1');
+INSERT INTO `estado` VALUES ('3', 'Vendido', '0');
 
 -- ----------------------------
 -- Table structure for `marca`
@@ -80,12 +133,12 @@ CREATE TABLE `marca` (
   `garden` int(1) DEFAULT '0',
   `estado` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of marca
 -- ----------------------------
-INSERT INTO `marca` VALUES ('1', 'Alfa Romeo', null, null, '0', '1');
+INSERT INTO `marca` VALUES ('1', 'Alfa Romeo', null, '', '0', '1');
 INSERT INTO `marca` VALUES ('2', 'Alpine', null, null, '0', '1');
 INSERT INTO `marca` VALUES ('3', 'Aston Martin', null, null, '0', '1');
 INSERT INTO `marca` VALUES ('4', 'Audi', null, null, '0', '1');
@@ -263,6 +316,8 @@ DROP TABLE IF EXISTS `tipo_vehiculo`;
 CREATE TABLE `tipo_vehiculo` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(120) NOT NULL,
+  `img` varchar(45) DEFAULT NULL,
+  `img_hover` varchar(45) DEFAULT NULL,
   `estado` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
@@ -270,18 +325,18 @@ CREATE TABLE `tipo_vehiculo` (
 -- ----------------------------
 -- Records of tipo_vehiculo
 -- ----------------------------
-INSERT INTO `tipo_vehiculo` VALUES ('1', 'Sedan', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('2', 'Crossover', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('3', 'SUV', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('4', 'Comercial', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('5', 'Coupe', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('6', 'Cabriolet', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('7', 'Familiar', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('8', 'Hatchback', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('9', 'Minivan', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('10', 'Pick-up', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('11', 'Combi', '1');
-INSERT INTO `tipo_vehiculo` VALUES ('12', 'Compacto', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('1', 'Sedan', 'sedan.png', 'sedan_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('2', 'Crossover', 'crossover.png', 'crossover_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('3', 'SUV', 'suv.png', 'suv_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('4', 'Comercial', 'comercial.png', 'comercial_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('5', 'Coupe', 'coupe.png', 'coupe_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('6', 'Cabriolet', 'cabriolet.png', 'cabriolet_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('7', 'Familiar', 'familiar.png', 'familiar_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('8', 'Hatchback', 'hatchback.png', 'hatchback_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('9', 'Minivan', 'minivan.png', 'minivan_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('10', 'Pick-up', 'pickup.png', 'pickup_hover.png', '1');
+INSERT INTO `tipo_vehiculo` VALUES ('11', 'Combi', null, null, '0');
+INSERT INTO `tipo_vehiculo` VALUES ('12', 'Compacto', 'compacto.png', 'compacto_hover.png', '1');
 
 -- ----------------------------
 -- Table structure for `vehiculo`
@@ -289,13 +344,15 @@ INSERT INTO `tipo_vehiculo` VALUES ('12', 'Compacto', '1');
 DROP TABLE IF EXISTS `vehiculo`;
 CREATE TABLE `vehiculo` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `id_modelo` int(11) unsigned NOT NULL,
   `id_estado` int(11) unsigned NOT NULL,
+  `id_marca` int(11) unsigned DEFAULT NULL,
   `id_combustible` int(11) unsigned NOT NULL,
   `id_condicion` int(11) unsigned NOT NULL,
   `id_tipo_vehiculo` int(11) unsigned NOT NULL,
   `id_tipo_traccion` int(11) unsigned NOT NULL,
+  `id_sede` int(11) unsigned DEFAULT NULL,
   `codigo` varchar(120) DEFAULT NULL,
+  `modelo` varchar(120) DEFAULT NULL,
   `version` varchar(120) DEFAULT NULL,
   `ano` varchar(120) DEFAULT NULL,
   `color` varchar(120) DEFAULT NULL,
@@ -308,9 +365,7 @@ CREATE TABLE `vehiculo` (
   `cantidad_pasajeros` int(2) DEFAULT NULL,
   `fecha` datetime DEFAULT NULL,
   `estado` int(1) NOT NULL DEFAULT '1',
-  `id_sede` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_id_modelo_vehiculo` (`id_modelo`),
   KEY `fk_id_estado_vehiculo` (`id_estado`),
   KEY `fk_id_combustible_vehiculo` (`id_combustible`),
   KEY `fk_id_condicion_vehiculo` (`id_condicion`),
@@ -320,7 +375,6 @@ CREATE TABLE `vehiculo` (
   CONSTRAINT `fk_id_combustible_vehiculo` FOREIGN KEY (`id_combustible`) REFERENCES `combustible` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_id_condicion_vehiculo` FOREIGN KEY (`id_condicion`) REFERENCES `condicion` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_id_estado_vehiculo` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_id_modelo_vehiculo` FOREIGN KEY (`id_modelo`) REFERENCES `modelo` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_id_sede_vehiculo` FOREIGN KEY (`id_sede`) REFERENCES `sede` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_id_tipo_traccion_veiculo` FOREIGN KEY (`id_tipo_traccion`) REFERENCES `tipo_traccion` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_id_tipo_vehiculo_vehiculo` FOREIGN KEY (`id_tipo_vehiculo`) REFERENCES `tipo_vehiculo` (`id`) ON UPDATE CASCADE
@@ -329,18 +383,18 @@ CREATE TABLE `vehiculo` (
 -- ----------------------------
 -- Records of vehiculo
 -- ----------------------------
-INSERT INTO `vehiculo` VALUES ('1', '1', '1', '3', '1', '12', '1', '235748', null, '2012', 'Celeste', 'Automática', '1.0', '8000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-24 08:43:34', '1', '1');
-INSERT INTO `vehiculo` VALUES ('2', '41', '1', '3', '2', '8', '1', '566930', 'LT', '2013', 'Plata', 'Mecánica 6 Vel.', '1.6', '18900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('3', '27', '1', '1', '1', '12', '1', '83378', 'ONE', '2011', 'Plata', 'Mecánica 6 Vel.', '1.6', '19900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('4', '2', '1', '1', '1', '1', '1', '249824', null, '2013', 'Azul', 'Automática', '1.4', '15600.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('5', '1', '1', '1', '1', '12', '1', '974886', 'LX', '2011', 'Blanco', 'Mecánica 5 Vel.', '1.1', '7000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('6', '29', '1', '2', '1', '10', '5', '5099949', 'Laramie', '2011', 'Negro', 'Automática', '6.7', '39500.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('7', '19', '1', '2', '1', '10', '5', '166203', 'C/S', '2004', 'Plata', 'Mecánica 5 Vel.', '2.8 Turbo', '15500.00', 'Hasta 48 Cuotas', null, null, '3', '2016-07-26 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('8', '38', '1', '2', '1', '10', '5', '884052', 'D/C', '2011', 'Plata', 'Mecánica 5 Vel.', '2.5', '19900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('9', '37', '1', '1', '2', '3', '5', '520145', 'LIMITED', '2011', 'Plata', 'Automática', '3.6', '39000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('10', '42', '1', '1', '2', '3', '5', '601003', '3P', '2011', 'Plata', 'Mecánica 5 Vel.', '1.6', '16500.00', 'Hasta 48 Cuotas', null, null, '2', '2016-07-26 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('11', '43', '1', '3', '1', '7', '1', '268719', 'LT', '2013', 'Gris Rusk', 'Mecánica 5 Vel.', '1.8', '17000.00', 'Hasta 48 Cuotas', null, null, '7', '2016-07-26 08:43:34', '1', '3');
-INSERT INTO `vehiculo` VALUES ('12', '13', '1', '2', '1', '3', '5', '874323', 'EX Full', '2009', 'Beige', 'Mecánica 5 Vel.', '2.5', '19000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '3');
+INSERT INTO `vehiculo` VALUES ('1', '1', '17', '3', '1', '12', '1', '1', '235748', 'Picano', null, '2012', 'Celeste', 'Automática', '1.0', '8000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-24 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('2', '1', '45', '3', '1', '8', '1', '3', '566930', 'Sonic', 'LT', '2013', 'Plata', 'Mecánica 6 Vel.', '1.6', '18900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('3', '1', '26', '1', '2', '12', '1', '3', '83378', 'MINI Countryman', 'ONE', '2011', 'Plata', 'Mecánica 6 Vel.', '1.6', '19900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('4', '1', '17', '1', '1', '1', '1', '3', '249824', 'Rio', null, '2013', 'Azul', 'Automática', '1.4', '15600.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('5', '1', '17', '1', '1', '12', '1', '3', '974886', 'Picanto', 'LX', '2011', 'Blanco', 'Mecánica 5 Vel.', '1.1', '7000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('6', '1', '47', '2', '1', '10', '5', '3', '5099949', '2500', 'Laramie', '2011', 'Negro', 'Automática', '6.7', '39500.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('7', '1', '45', '2', '1', '10', '5', '3', '166203', 'S10', 'C/S', '2004', 'Plata', 'Mecánica 5 Vel.', '2.8 Turbo', '15500.00', 'Hasta 48 Cuotas', null, null, '3', '2016-07-26 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('8', '1', '23', '2', '1', '10', '5', '3', '884052', 'BT-50', 'D/C', '2011', 'Plata', 'Mecánica 5 Vel.', '2.5', '19900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('9', '1', '16', '1', '2', '3', '5', '3', '520145', 'Grand Cherokee', 'LIMITED', '2011', 'Plata', 'Automática', '3.6', '39000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('10', '1', '40', '1', '2', '3', '5', '3', '601003', 'Grand Vitara', '3P', '2011', 'Plata', 'Mecánica 5 Vel.', '1.6', '16500.00', 'Hasta 48 Cuotas', null, null, '2', '2016-07-26 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('11', '1', '45', '3', '1', '7', '1', '3', '268719', 'Spin', 'LT', '2013', 'Gris Rusk', 'Mecánica 5 Vel.', '1.8', '17000.00', 'Hasta 48 Cuotas', null, null, '7', '2016-07-26 08:43:34', '1');
+INSERT INTO `vehiculo` VALUES ('12', '1', '17', '2', '1', '3', '5', '3', '874323', 'Sorento', 'EX Full', '2009', 'Beige', 'Mecánica 5 Vel.', '2.5', '19000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
 
 -- ----------------------------
 -- Table structure for `vehiculo_img`

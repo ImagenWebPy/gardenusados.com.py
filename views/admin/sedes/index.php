@@ -5,12 +5,12 @@ $helper = new Helper();
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Condición
+            Sedes
             <small>Listado</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="<?= URL; ?>admin/"><i class="fa fa-dashboard"></i> Inicio</a></li>
-            <li class="active">Condición</li>
+            <li class="active">Sedes</li>
         </ol>
     </section>
     <!-- Main content -->
@@ -24,14 +24,18 @@ $helper = new Helper();
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Listado de Condiciones</h3>
+                        <h3 class="box-title">Listado de Modelos</h3>
+                        <div class="col-xs-6 pull-right">
+                            <button type="button" class="btn btn-block btn-primary btnAgregarSede">Agregar Nueva Sede</button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table class="table table-bordered table-striped" id="tblCondicion">
+                        <table class="table table-bordered table-striped" id="tblModelos">
                             <thead>
                                 <tr>
-                                    <th>Descripción</th>
+                                    <th>Sede</th>
+                                    <th>Ciudad</th>
                                     <th>Estado</th>
                                     <th>Editar</th>
                                 </tr>
@@ -41,7 +45,8 @@ $helper = new Helper();
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Descripción</th>
+                                    <th>Sede</th>
+                                    <th>Ciudad</th>
                                     <th>Estado</th>
                                     <th>Editar</th>
                                 </tr>
@@ -59,7 +64,7 @@ $helper = new Helper();
 </div>
 <script>
     $(function () {
-        $("#tblCondicion").DataTable({
+        $("#tblModelos").DataTable({
             //"aaSorting": [[1, "asc"]],
             "paging": true,
             "orderCellsTop": true,
@@ -68,11 +73,12 @@ $helper = new Helper();
             "fixedColumns": true,
             //"iDisplayLength": 50,
             "ajax": {
-                "url": "<?= URL ?>admin/listadoDTCondicion/",
+                "url": "<?= URL ?>admin/listadoDTSedes/",
                 "type": "post"
             },
             "columns": [
-                {"data": "descripcion"},
+                {"data": "sede"},
+                {"data": "ciudad"},
                 {"data": "estado"},
                 {"data": "editar"}
             ],
@@ -80,14 +86,12 @@ $helper = new Helper();
                 "url": "<?= URL ?>public/language/Spanish.json"
             }
         });
-        $(document).on("click", ".editDTCondicion", function (e) {
+        $(document).on("click", ".btnAgregarSede", function (e) {
             if (e.handled !== true) // This will prevent event triggering more then once
             {
-                var id = $(this).attr("data-id");
                 $.ajax({
-                    url: "<?= URL; ?>admin/getEditarCondicion",
+                    url: "<?= URL; ?>admin/modalAgregarSede",
                     type: "POST",
-                    data: {id: id},
                     dataType: "json"
                 }).done(function (data) {
                     $(".genericModal .modal-header").removeClass("modal-header").addClass("modal-header bg-primary");

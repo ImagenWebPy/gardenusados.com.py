@@ -111,7 +111,6 @@
                         <li class="header">MENU PRINCIPAL</li>
                         <li class="active"><a href="<?= URL; ?>admin/"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                         <li><a href="<?= URL; ?>admin/marcas"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Marcas</span></a></li>
-                        <li><a href="<?= URL; ?>admin/modelos"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Modelos</span></a></li>
                         <li><a href="<?= URL; ?>admin/sedes"><i class="fa fa-map-marker" aria-hidden="true"></i> <span>Sedes</span></a></li>
                         <li><a href="<?= URL; ?>admin/combustible"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Combustible</span></a></li>
                         <li><a href="<?= URL; ?>admin/condicion"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span>Condición</span></a></li>

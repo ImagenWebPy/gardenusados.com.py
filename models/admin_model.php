@@ -11,18 +11,60 @@ class Admin_Model extends Model {
                                   ORDER BY garden desc, descripcion DESC");
         $datos = array();
         foreach ($sql as $item) {
+            $id = $item['id'];
             if (!empty($item['imagen'])) {
                 $img = '<img class="img-responsive" src="' . IMG . 'logo/' . utf8_encode($item['imagen']) . '" alt="' . utf8_encode($item['descripcion']) . '">';
             } else {
                 $img = '<img class="img-responsive" src="' . IMG . 'logo/no-disponible.jpg" alt="' . utf8_encode($item['descripcion']) . '">';
             }
-            $btnEditar = '<a class="btn btn-app editDTMarca pointer btn-xs" data-id="' . $item['id'] . '"><i class="fa fa-edit"></i> Editar </a>';
+            $btnEditar = '<a class="btn btn-app editDTMarca pointer btn-xs" data-id="' . $id . '"><i class="fa fa-edit"></i> Editar </a>';
             $url = '<a href="' . utf8_encode($item['url']) . '" target="_blank">' . utf8_encode($item['url']) . '</a>';
             array_push($datos, array(
+                "DT_RowId" => "marca_$id",
                 'marca' => utf8_encode($item['descripcion']),
                 'imagen' => $img,
                 'enlace' => $url,
                 'editar' => $btnEditar
+            ));
+        }
+        $json = '{"data": ' . json_encode($datos) . '}';
+        return $json;
+    }
+
+    public function listadoDTVehiculos() {
+        $sql = $this->db->select("select v.id,
+                                        ma.descripcion as marca,
+                                        v.modelo,
+                                        v.version,
+                                        v.precio,
+                                        v.fecha,
+                                        v.estado,
+                                        s.ciudad,
+                                        s.descripcion as sede,
+                                        v.estado
+                                from vehiculo v
+                                LEFT JOIN marca ma on ma.id = v.id_marca
+                                LEFT JOIN sede s on s.id = v.id_sede
+                                ORDER BY v.id DESC");
+        $datos = array();
+        foreach ($sql as $item) {
+            $id = $item['id'];
+            $btn = '<a class="btn btn-app pointer btnEditarVehiculo btnSmall" data-id="' . $id . '"><i class="fa fa-edit"></i> Editar</a>';
+            $btnDel = '<a class="btn btn-app pointer btnEliminarVehiculo btnSmall" data-id="' . $id . '"><i class="fa fa-ban" aria-hidden="true"></i> Eliminar</a>';
+            if ($item['estado'] == 1) {
+                $estado = '<a class="pointer btnCambiarEstado" data-id="' . $id . '" data-estado="1"><span class="label label-success">Activo</span></a>';
+            } else {
+                $estado = '<a class="pointer btnCambiarEstado" data-id="' . $id . '" data-estado="0"><span class="label label-danger">Inactivo</span></a>';
+            }
+            array_push($datos, array(
+                "DT_RowId" => "vehiculo_$id",
+                'fecha' => date('d-m-Y', strtotime($item['fecha'])),
+                'marca' => utf8_encode($item['marca']),
+                'modelo' => utf8_encode($item['modelo']),
+                'version' => utf8_encode($item['version']),
+                'precio' => number_format($item['precio'], 0, ',', '.'),
+                'sede' => utf8_encode($item['sede']) . ' ' . utf8_encode($item['ciudad']),
+                'estado' => $btn . ' | ' . $btnDel
             ));
         }
         $json = '{"data": ' . json_encode($datos) . '}';
@@ -98,6 +140,197 @@ class Admin_Model extends Model {
         return json_encode($datos);
     }
 
+    public function modalAgregarMarca() {
+        $form = '<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Modificar Datos</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" action="' . URL . 'admin/addMarca" method="POST" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Nombre Marca</label>
+                  <input type="text" name="descripcion" class="form-control" value="" placeholder="Ingrese el nombre de la Marca">
+                </div>
+                <div class="form-group">
+                  <label>Enlace</label>
+                  <input type="text" name="url" class="form-control" value="" placeholder="Ingrese el enlace">
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="" name="garden"> Pertenece al Grupo Garden
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="1" name="estado"> Estado
+                  </label>
+                </div>
+                <div class="col-md-12">
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><i class="icon fa fa-warning"></i> Importante!</h4>
+                        Solo se permiten imagenes <strong>.jpg,.png</strong>. Las imagenes se redimensionaran automaticamente al tamaño 276 x 174px.
+                    </div>
+                </div>
+                <div class="html5fileupload imgMarca" data-form="true" data-valid-extensions="JPG,JPEG,jpg,png,jpeg" style="width: 100%; display: inline-block;">
+                    <input type="file" name="file_archivo[]" />
+                </div>
+                <script>
+                    $(".html5fileupload.imgMarca").html5fileupload();
+                </script>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+              </div>
+            </form>
+          </div>';
+        $datos = array(
+            'titulo' => 'Agregar Marca',
+            'contenido' => $form
+        );
+        return json_encode($datos);
+    }
+
+    public function modalAgregarVehiculo() {
+        $marcas = $this->helper->getMarcas();
+        $combustible = $this->helper->getTipoCombusitble();
+        $condicion = $this->helper->getCondicion();
+        $tipoVehiculo = $this->helper->getTipoVehiculo();
+        $tipoTraccion = $this->helper->getTipoTraccion();
+        $sedes = $this->helper->getSedes();
+        $estado = $this->helper->getEstado();
+        $form = '<div class="box box-primary">
+                    <div class="box-header with-border">
+                      <h3 class="box-title">Modificar Vehículo</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form" action="' . URL . 'admin/addVehiculo" method="POST" enctype="multipart/form-data">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nombre Marca</label>
+                                        <select class="form-control" name="vehiculo[marca]" required>
+                                            <option value="">Selecciona una Marca</option>';
+        foreach ($marcas as $item) {
+            $form .= '                      <option value="' . $item['id'] . '">' . utf8_encode($item['descripcion']) . '</option>';
+        }
+        $form .= '                      </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Modelo</label>
+                                        <input type="text" name="vehiculo[modelo]" class="form-control" value="" placeholder="Ingrese el modelo" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                  <label>Enlace</label>
+                                  <input type="text" name="url" class="form-control" value="" placeholder="Ingrese el enlace">
+                                </div>
+                                <div class="checkbox">
+                                  <label>
+                                    <input type="checkbox" value="" name="garden"> Pertenece al Grupo Garden
+                                  </label>
+                                </div>
+                                <div class="checkbox">
+                                  <label>
+                                    <input type="checkbox" value="1" name="estado"> Estado
+                                  </label>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <h4><i class="icon fa fa-warning"></i> Importante!</h4>
+                                        Solo se permiten imagenes <strong>.jpg,.png</strong>. Las imagenes se redimensionaran automaticamente al tamaño 276 x 174px.
+                                    </div>
+                                </div>
+                                <div class="html5fileupload imgMarca" data-form="true" data-valid-extensions="JPG,JPEG,jpg,png,jpeg" style="width: 100%; display: inline-block;">
+                                    <input type="file" name="file_archivo[]" />
+                                </div>
+                                <script>
+                                    $(".html5fileupload.imgMarca").html5fileupload();
+                                </script>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                          <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+                        </div>
+                    </form>
+                </div>';
+        $datos = array(
+            'titulo' => 'Agregar Marca',
+            'contenido' => $form
+        );
+        return json_encode($datos);
+    }
+
+    public function modalAgregarSede() {
+        $form = '<div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Modificar Datos</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" action="' . URL . 'admin/addSede" method="POST" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Nombre Sede</label>
+                  <input type="text" name="descripcion" class="form-control" value="" placeholder="Ingrese el nombre de la Marca">
+                </div>
+                <div class="form-group">
+                  <label>Ciudad</label>
+                  <input type="text" name="ciudad" class="form-control" value="" placeholder="Ingrese el enlace">
+                </div>
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <input type="text" name="telefono" class="form-control" value="" placeholder="Ingrese el enlace">
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="text" name="email" class="form-control" value="" placeholder="Ingrese el enlace">
+                </div>
+                <div class="form-group">
+                  <label>Latitud</label>
+                  <input type="text" name="latitud" class="form-control" value="" placeholder="Ingrese el enlace">
+                </div>
+                <div class="form-group">
+                  <label>Longitud</label>
+                  <input type="text" name="longitud" class="form-control" value="" placeholder="Ingrese el enlace">
+                </div>
+                <div class="form-group">
+                  <label>Dirección</label>
+                  <input type="text" name="direccion" class="form-control" value="" placeholder="Ingrese el enlace">
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="1" name="principal"> Principal
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="1" name="estado" checked> Estado
+                  </label>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+              </div>
+            </form>
+          </div>';
+        $datos = array(
+            'titulo' => 'Agregar Marca',
+            'contenido' => $form
+        );
+        return json_encode($datos);
+    }
+
     public function saveEditarMarca($data) {
         $id = $data['id'];
         $sqlEstado = $this->helper->verificaEstado('marca', $id);
@@ -128,6 +361,17 @@ class Admin_Model extends Model {
             'mensaje' => 'Se ha actualizado correctamente los datos de ' . $data['descripcion']));
     }
 
+    public function addMarca($data) {
+        $this->db->insert('marca', array(
+            'descripcion' => $data['descripcion'],
+            'url' => $data['url'],
+            'garden' => $data['garden'],
+            'estado' => $data['estado']
+        ));
+        $id = $this->db->lastInsertId();
+        return $id;
+    }
+
     public function listadoDTModelos() {
         $sql = $this->db->select("select m.id, 
                                         m.descripcion,
@@ -148,6 +392,33 @@ class Admin_Model extends Model {
             array_push($datos, array(
                 'modelo' => utf8_encode($item['descripcion']),
                 'marca' => utf8_encode($item['marca']),
+                'estado' => $estado,
+                'editar' => $btnEditar
+            ));
+        }
+        $json = '{"data": ' . json_encode($datos) . '}';
+        return $json;
+    }
+
+    public function listadoDTSedes() {
+        $sql = $this->db->select("select s.id, 
+                                        s.descripcion,
+                                        s.ciudad,
+                                        s.estado
+                                from sede s
+                                ORDER BY s.principal desc,s.descripcion asc");
+        $datos = array();
+        foreach ($sql as $item) {
+            $id = $item['id'];
+            if ($item['estado'] == 1) {
+                $estado = '<a class="pointer btnCambiarEstado" data-id="' . $id . '" data-estado="1"><span class="label label-success">Activo</span></a>';
+            } else {
+                $estado = '<a class="pointer btnCambiarEstado" data-id="' . $id . '" data-estado="0"><span class="label label-danger">Inactivo</span></a>';
+            }
+            $btnEditar = '<a class="btn btn-app btnEditSede pointer btnSmall" data-id="' . $id . '"><i class="fa fa-edit"></i> Editar </a>';
+            array_push($datos, array(
+                'sede' => utf8_encode($item['descripcion']),
+                'ciudad' => utf8_encode($item['ciudad']),
                 'estado' => $estado,
                 'editar' => $btnEditar
             ));

@@ -17,12 +17,34 @@ class Admin extends Controller {
             unset($_SESSION['message']);
     }
 
+    public function vehiculos() {
+        $this->view->public_css = array("admin/plugins/datatables/dataTables.bootstrap.css", "admin/plugins/html5fileupload/html5fileupload.css");
+        $this->view->public_js = array("admin/plugins/datatables/jquery.dataTables.min.js", "admin/plugins/datatables/dataTables.bootstrap.min.js", "admin/plugins/html5fileupload/html5fileupload.min.js");
+        $this->view->title = 'Vehículos';
+        $this->view->render('admin/header');
+        $this->view->render('admin/vehiculos/index');
+        $this->view->render('admin/footer');
+        if (!empty($_SESSION['message']))
+            unset($_SESSION['message']);
+    }
+    
     public function marcas() {
         $this->view->public_css = array("admin/plugins/datatables/dataTables.bootstrap.css", "admin/plugins/html5fileupload/html5fileupload.css");
         $this->view->public_js = array("admin/plugins/datatables/jquery.dataTables.min.js", "admin/plugins/datatables/dataTables.bootstrap.min.js", "admin/plugins/html5fileupload/html5fileupload.min.js");
         $this->view->title = 'Marcas';
         $this->view->render('admin/header');
         $this->view->render('admin/marcas/index');
+        $this->view->render('admin/footer');
+        if (!empty($_SESSION['message']))
+            unset($_SESSION['message']);
+    }
+
+    public function sedes() {
+        $this->view->public_css = array("admin/plugins/datatables/dataTables.bootstrap.css", "admin/plugins/html5fileupload/html5fileupload.css");
+        $this->view->public_js = array("admin/plugins/datatables/jquery.dataTables.min.js", "admin/plugins/datatables/dataTables.bootstrap.min.js", "admin/plugins/html5fileupload/html5fileupload.min.js");
+        $this->view->title = 'Sedes';
+        $this->view->render('admin/header');
+        $this->view->render('admin/sedes/index');
         $this->view->render('admin/footer');
         if (!empty($_SESSION['message']))
             unset($_SESSION['message']);
@@ -44,6 +66,12 @@ class Admin extends Controller {
         $data = $this->model->listadoDTMarcas();
         echo $data;
     }
+   
+    public function listadoDTVehiculos() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = $this->model->listadoDTVehiculos();
+        echo $data;
+    }
 
     public function getEditarMarca() {
         header('Content-type: application/json; charset=utf-8');
@@ -51,6 +79,24 @@ class Admin extends Controller {
             'id' => $this->helper->cleanInput($_POST['id'])
         );
         $data = $this->model->getEditarMarca($data);
+        echo $data;
+    }
+
+    public function modalAgregarMarca() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = $this->model->modalAgregarMarca();
+        echo $data;
+    }
+ 
+    public function modalAgregarVehiculo() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = $this->model->modalAgregarVehiculo();
+        echo $data;
+    }
+    
+    public function modalAgregarSede() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = $this->model->modalAgregarSede();
         echo $data;
     }
 
@@ -100,6 +146,50 @@ class Admin extends Controller {
         header('Location: ' . URL . 'admin/marcas');
     }
 
+    public function addMarca() {
+        $descripcion = $this->helper->cleanInput($_POST['descripcion']);
+        $url = $this->helper->cleanInput($_POST['url']);
+        $garden = (!empty($_POST['garden'])) ? $this->helper->cleanInput($_POST['garden']) : 0;
+        $estado = (!empty($_POST['estado'])) ? $this->helper->cleanInput($_POST['estado']) : 0;
+        #SUBIMOS LA IMAGEN
+        $dir = 'public/images/logo/';
+        $serverdir = $dir;
+        #IMAGENES
+        $imagenes = array();
+        $dataFiles = array(
+            'descripcion' => $descripcion,
+            'url' => $url,
+            'garden' => $garden,
+            'estado' => $estado
+        );
+        $id = $this->model->addMarca($dataFiles);
+        if (!empty($_FILES['file_archivo']['name'][0])) {
+            $cantImagenes = count($_FILES['file_archivo']['name']) - 1;
+            for ($i = 0; $i <= $cantImagenes; $i++) {
+                $newname = $id . '_' . $_FILES['file_archivo']['name'][$i];
+                $fname = $this->helper->cleanUrl($newname);
+                $contents = file_get_contents($_FILES['file_archivo']['tmp_name'][$i]);
+                $handle = fopen($serverdir . $fname, 'w');
+                fwrite($handle, $contents);
+                fclose($handle);
+                #############
+                #SE REDIMENSIONA LA IMAGEN
+                #############
+                # ruta de la imagen a redimensionar 
+                $imagen = "public/images/logo/$fname";
+                # ruta de la imagen final, si se pone el mismo nombre que la imagen, esta se sobreescribe 
+                $imagen_final = $fname;
+                $ancho = 276;
+                $alto = 174;
+                $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto);
+                #############
+                $imagenes [] = $fname;
+            }
+        }
+
+        header('Location: ' . URL . 'admin/marcas');
+    }
+
     public function modelos() {
         $this->view->public_css = array("admin/plugins/datatables/dataTables.bootstrap.css");
         $this->view->public_js = array("admin/plugins/datatables/jquery.dataTables.min.js", "admin/plugins/datatables/dataTables.bootstrap.min.js");
@@ -116,7 +206,13 @@ class Admin extends Controller {
         $data = $this->model->listadoDTModelos();
         echo $data;
     }
-    
+
+    public function listadoDTSedes() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = $this->model->listadoDTSedes();
+        echo $data;
+    }
+
     public function listadoDTTipoVehiculos() {
         header('Content-type: application/json; charset=utf-8');
         $data = $this->model->listadoDTTipoVehiculos();
@@ -250,5 +346,17 @@ class Admin extends Controller {
         $this->model->saveEditarTraccion($data);
         header('Location: ' . URL . 'admin/traccion');
     }
-
+    
+    public function addSede(){
+        $data = array(
+            'descripcion' => $this->helper->cleanInput($_POST['descripcion']),
+            'ciudad' => $this->helper->cleanInput($_POST['ciudad']),
+            'telefono' => $this->helper->cleanInput($_POST['telefono']),
+            'email' => $this->helper->cleanInput($_POST['email']),
+            'latitud' => $this->helper->cleanInput($_POST['latitud']),
+            'longitud' => $this->helper->cleanInput($_POST['longitud']),
+            'principal' => (!empty($_POST['principal'])) ? $this->helper->cleanInput($_POST['principal']) : 0,
+            'estado' => (!empty($_POST['estado'])) ? $this->helper->cleanInput($_POST['estado']) : 0,
+        );
+    }
 }

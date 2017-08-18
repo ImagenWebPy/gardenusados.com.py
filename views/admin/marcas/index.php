@@ -27,6 +27,9 @@ $helper = new Helper();
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Listado de Marcas</h3>
+                        <div class="col-xs-6 pull-right">
+                            <button type="button" class="btn btn-block btn-primary btnAgregarMarca">Agregar Nueva Marca</button>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -99,6 +102,22 @@ $helper = new Helper();
                 }).done(function (data) {
                     $(".genericModal .modal-header").removeClass("modal-header").addClass("modal-header bg-primary");
                     $(".genericModal .modal-title").html(data['marca']);
+                    $(".genericModal .modal-body").html(data['contenido']);
+                    $(".genericModal").modal("toggle");
+                });
+            }
+            e.handled = true;
+        });
+        $(document).on("click", ".btnAgregarMarca", function (e) {
+            if (e.handled !== true) // This will prevent event triggering more then once
+            {
+                $.ajax({
+                    url: "<?= URL; ?>admin/modalAgregarMarca",
+                    type: "POST",
+                    dataType: "json"
+                }).done(function (data) {
+                    $(".genericModal .modal-header").removeClass("modal-header").addClass("modal-header bg-primary");
+                    $(".genericModal .modal-title").html(data['titulo']);
                     $(".genericModal .modal-body").html(data['contenido']);
                     $(".genericModal").modal("toggle");
                 });
