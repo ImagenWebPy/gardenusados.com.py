@@ -300,7 +300,7 @@ class Helper {
     public function ultimosVehiculos($limit = 3) {
         $sql = $this->db->select("select v.id,
                                         m.descripcion as marca,
-                                        mo.descripcion as modelo,
+                                        v.modelo,
                                         v.version, 
                                         v.ano, 
                                         v.transmision,
@@ -311,8 +311,7 @@ class Helper {
                                         vi.imagen,
                                         v.kilometraje
                                 from vehiculo v
-                                LEFT JOIN modelo mo on mo.id = v.id_modelo
-                                LEFT JOIN marca m on m.id = mo.id_marca
+                                LEFT JOIN marca m on m.id = v.id_marca
                                 LEFT JOIN condicion c on c.id = v.id_condicion
                                 LEFT JOIN combustible com on com.id = v.id_combustible
                                 LEFT JOIN vehiculo_img vi on vi.id_vehiculo = v.id
