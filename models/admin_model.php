@@ -63,6 +63,7 @@ class Admin_Model extends Model {
             }
             array_push($datos, array(
                 "DT_RowId" => "vehiculo_$id",
+                'id' => $id,
                 'fecha' => date('d/m/Y', strtotime($item['fecha'])),
                 'marca' => utf8_encode($item['marca']),
                 'modelo' => utf8_encode($item['modelo']),
@@ -248,7 +249,7 @@ class Admin_Model extends Model {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Versión</label>
-                                        <input type="text" name="vehiculo[version]" class="form-control" value="" placeholder="Ingrese la versión" required>
+                                        <input type="text" name="vehiculo[version]" class="form-control" value="" placeholder="Ingrese la versión">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -1118,18 +1119,18 @@ class Admin_Model extends Model {
             'id_tipo_vehiculo' => $data['id_tipo_vehiculo'],
             'id_tipo_traccion' => $data['id_tipo_traccion'],
             'id_sede' => $data['id_sede'],
-            'codigo' => $data['codigo'],
-            'modelo' => $data['modelo'],
-            'version' => $data['version'],
-            'ano' => $data['ano'],
-            'color' => $data['color'],
-            'transmision' => $data['transmision'],
-            'motor' => $data['motor'],
-            'precio' => $data['precio'],
-            'cuotas' => $data['cuotas'],
-            'adicionales' => $data['adicionales'],
-            'kilometraje' => $data['kilometraje'],
-            'cantidad_pasajeros' => $data['cantidad_pasajeros'],
+            'codigo' => utf8_decode($data['codigo']),
+            'modelo' => utf8_decode($data['modelo']),
+            'version' => (!empty($data['version'])) ? utf8_decode($data['version']) : NULL,
+            'ano' => (!empty($data['ano'])) ? utf8_decode($data['ano']) : NULL,
+            'color' => (!empty($data['color'])) ? utf8_decode($data['color']) : NULL,
+            'transmision' => utf8_decode($data['transmision']),
+            'motor' => utf8_decode($data['motor']),
+            'precio' => utf8_decode($data['precio']),
+            'cuotas' => utf8_decode($data['cuotas']),
+            'adicionales' => (!empty($data['adicionales'])) ? utf8_decode($data['adicionales']) : NULL,
+            'kilometraje' => (!empty($data['kilometraje'])) ? $data['kilometraje'] : NULL,
+            'cantidad_pasajeros' => (!empty($data['cantidad_pasajeros'])) ? $data['cantidad_pasajeros'] : NULL,
             'fecha' => $data['fecha'],
             'estado' => $data['estado']
         ));

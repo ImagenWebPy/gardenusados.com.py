@@ -36,6 +36,7 @@ $helper = new Helper();
                         <table class="table table-bordered table-striped" id="tblVehiculos">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Fecha</th>
                                     <th>Marca</th>
                                     <th>Modelo</th>
@@ -51,6 +52,7 @@ $helper = new Helper();
                             </tbody>
                             <tfoot>
                                 <tr>
+                                    <th>#</th>
                                     <th>Fecha</th>
                                     <th>Modelo</th>
                                     <th>Version</th>
@@ -88,6 +90,7 @@ $helper = new Helper();
                 "type": "post"
             },
             "columns": [
+                {"data": "id"},
                 {"data": "fecha"},
                 {"data": "marca"},
                 {"data": "modelo"},

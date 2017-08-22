@@ -11,36 +11,36 @@ $sede = $helper->getSedes();
         <div class="carousel-inner">
             <div class="item active">
                 <img src="<?= MEDIA; ?>main-slider/1.jpg" alt="sliderImg" />
-<!--                <div class="container">
-                    <div class="carousel-caption b-slider__info">
-                        <h3>Find your dream</h3>
-                        <h2>Lamborghini Aventador</h2>
-                        <p>Model 2015 <span>$184,900</span></p>
-                        <a class="btn m-btn" href="detail.html">see details<span class="fa fa-angle-right"></span></a>
-                    </div>
-                </div>-->
+                <!--                <div class="container">
+                                    <div class="carousel-caption b-slider__info">
+                                        <h3>Find your dream</h3>
+                                        <h2>Lamborghini Aventador</h2>
+                                        <p>Model 2015 <span>$184,900</span></p>
+                                        <a class="btn m-btn" href="detail.html">see details<span class="fa fa-angle-right"></span></a>
+                                    </div>
+                                </div>-->
             </div>
             <div class="item">
                 <img src="<?= MEDIA; ?>main-slider/2.jpg" alt="sliderImg" />
-<!--                <div class="container">
-                    <div class="carousel-caption b-slider__info">
-                        <h3>Find your dream</h3>
-                        <h2>Lamborghini Aventador</h2>
-                        <p>Model 2015 <span>$184,900</span></p>
-                        <a class="btn m-btn" href="detail.html">see details<span class="fa fa-angle-right"></span></a>
-                    </div>
-                </div>-->
+                <!--                <div class="container">
+                                    <div class="carousel-caption b-slider__info">
+                                        <h3>Find your dream</h3>
+                                        <h2>Lamborghini Aventador</h2>
+                                        <p>Model 2015 <span>$184,900</span></p>
+                                        <a class="btn m-btn" href="detail.html">see details<span class="fa fa-angle-right"></span></a>
+                                    </div>
+                                </div>-->
             </div>
             <div class="item">
                 <img src="<?= MEDIA; ?>main-slider/3.jpg"  alt="sliderImg"/>
-<!--                <div class="container">
-                    <div class="carousel-caption b-slider__info">
-                        <h3>Find your dream</h3>
-                        <h2>Lamborghini Aventador</h2>
-                        <p>Model 2015 <span>$184,900</span></p>
-                        <a class="btn m-btn" href="detail.html">see details<span class="fa fa-angle-right"></span></a>
-                    </div>
-                </div>-->
+                <!--                <div class="container">
+                                    <div class="carousel-caption b-slider__info">
+                                        <h3>Find your dream</h3>
+                                        <h2>Lamborghini Aventador</h2>
+                                        <p>Model 2015 <span>$184,900</span></p>
+                                        <a class="btn m-btn" href="detail.html">see details<span class="fa fa-angle-right"></span></a>
+                                    </div>
+                                </div>-->
             </div>
         </div>
         <a class="carousel-control right" href="#carousel" data-slide="next">
@@ -130,6 +130,7 @@ $sede = $helper->getSedes();
                                 <?php
                                 $version = (!empty($item['version'])) ? ' ' . $item['version'] : '';
                                 $nombre = utf8_encode($item['marca']) . ' ' . utf8_encode($item['modelo']) . $version;
+                                $url = URL . 'vehiculo/detalle/' . $item['id'] . '/' . $helper->cleanUrl($nombre);
                                 ?>
                                 <div class="col-md-3 paddingCorrectionList">
                                     <div class="b-items__cell wow zoomInUp heightCorrectionList" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomInUp;">
@@ -141,7 +142,7 @@ $sede = $helper->getSedes();
                                         </div>
                                         <div class="b-items__cell-info">
                                             <div class="s-lineDownLeft b-items__cell-info-title">
-                                                <h2 class="h2List"><?= $nombre; ?></h2>
+                                                <a href="<?= $url ?>"><h2 class="h2List"><?= $nombre; ?></h2></a>
                                             </div>
                                             <div class="row m-smallPadding">
                                                 <div class="col-xs-6">
@@ -160,7 +161,7 @@ $sede = $helper->getSedes();
                                                             <p><?= $item['kilometraje']; ?> KM</p>
                                                         </div>
                                                     <?php endif; ?>
-                                                    <a href="<?= URL; ?>vehiculo/detalle/<?= $item['id']; ?>/<?= $helper->cleanUrl($nombre) ?>" class="btn m-btn">VER DETALLES<span class="fa fa-angle-right"></span></a>
+                                                    <a href="<?= $url ?>" class="btn m-btn">VER DETALLES<span class="fa fa-angle-right"></span></a>
                                                 </div>
                                             </div>
                                         </div>

@@ -21,6 +21,7 @@ $listado = $this->listado;
                         <?php
                         $version = (!empty($item['version'])) ? ' ' . $item['version'] : '';
                         $nombre = utf8_encode($item['marca']) . ' ' . utf8_encode($item['modelo']) . $version;
+                        $url = URL . 'vehiculo/detalle/' . $item['id'] . '/' . $helper->cleanUrl($nombre);
                         ?>
                         <div class="col-lg-4 col-md-6 col-xs-12 paddingCorrectionList">
                             <div class="b-items__cell wow zoomInUp heightCorrectionList" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomInUp;">
@@ -32,7 +33,7 @@ $listado = $this->listado;
                                 </div>
                                 <div class="b-items__cell-info">
                                     <div class="s-lineDownLeft b-items__cell-info-title">
-                                        <h2 class="h2List"><?= $nombre; ?></h2>
+                                        <a href="<?= $url ?>"><h2 class="h2List"><?= $nombre; ?></h2></a>
                                     </div>
                                     <div class="row m-smallPadding">
                                         <div class="col-xs-6">
@@ -51,7 +52,7 @@ $listado = $this->listado;
                                                     <p><?= $item['kilometraje']; ?> KM</p>
                                                 </div>
                                             <?php endif; ?>
-                                            <a href="<?= URL; ?>vehiculo/detalle/<?= $item['id']; ?>/<?= $helper->cleanUrl($nombre) ?>" class="btn m-btn">VER DETALLES<span class="fa fa-angle-right"></span></a>
+                                            <a href="<?= $url ?>" class="btn m-btn">VER DETALLES<span class="fa fa-angle-right"></span></a>
                                         </div>
                                     </div>
                                 </div>
