@@ -197,7 +197,7 @@ $marcas = $helper->getGardenMarcas();
                                 <div><?= $datos[0]['telefono']; ?></div>
                             </div>
                             <div class="b-detail__main-aside-about-seller">
-                                <p>Sede: <span><?= $datos[0]['sede'] . ' ' . $datos[0]['ciudad']; ?></span></p>
+                                <p>Sede: <span><?= $datos[0]['sede'] . ' ' . utf8_encode($datos[0]['ciudad']); ?></span></p>
                             </div>
                         </div>
                     </aside>
