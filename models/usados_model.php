@@ -33,6 +33,7 @@ class Usados_Model extends Model {
                                 LEFT JOIN vehiculo_img vi ON vi.id_vehiculo = v.id
                                 WHERE vi.principal = 1
                                 and c.id = 1
+                                and v.estado = 1
                                 ORDER BY v.id desc
                                 LIMIT $pageLimit, $setLimit");
         $condicion = "FROM vehiculo v
@@ -41,6 +42,7 @@ class Usados_Model extends Model {
                                 LEFT JOIN combustible com ON com.id = v.id_combustible
                                 LEFT JOIN vehiculo_img vi ON vi.id_vehiculo = v.id
                                 WHERE vi.principal = 1
+                                and v.estado = 1
                                 and c.id = 1";
         $data = array(
             'listado' => $sql,

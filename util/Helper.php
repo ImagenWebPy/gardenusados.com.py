@@ -199,6 +199,7 @@ class Helper {
                                 LEFT JOIN combustible com ON com.id = v.id_combustible
                                 LEFT JOIN vehiculo_img vi ON vi.id_vehiculo = v.id
                                 WHERE vi.principal = 1
+                                and v.estado = 1
                                 ORDER BY v.id DESC
                                 LIMIT " . CANT_REG);
         return $sql;
@@ -325,7 +326,7 @@ class Helper {
         $sql = $this->db->select("select * from sede where estado = 1 ORDER BY id ASC");
         return $sql;
     }
-    
+
     public function getEstado() {
         $sql = $this->db->select("select * from estado where estado = 1 ORDER BY descripcion ASC");
         return $sql;
@@ -367,7 +368,7 @@ class Helper {
 
     public function getTipoVehiculo($filtro = NULL) {
         if (empty($filtro)) {
-            $sql = $this->db->select("select id, descripcion, img, img_hover from tipo_vehiculo where estado = 1 ORDER BY tv.descripcion ASC");
+            $sql = $this->db->select("select id, descripcion, img, img_hover from tipo_vehiculo where estado = 1 ORDER BY descripcion ASC");
         } else {
             $sql = $this->db->select("select tv.id, tv.descripcion, tv.img, tv.img_hover 
                                     from tipo_vehiculo tv
@@ -383,7 +384,7 @@ class Helper {
         $sql = $this->db->select("select id, descripcion from combustible where estado = 1");
         return $sql;
     }
-    
+
     public function getTipoTraccion() {
         $sql = $this->db->select("select * from tipo_traccion where estado = 1");
         return $sql;
@@ -554,6 +555,51 @@ class Helper {
     public function verificaEstado($tabla, $id, $campo = NULL) {
         $sql = $this->db->select("select estado from $tabla where id = $id");
         return $sql[0]['estado'];
+    }
+
+    public function loadGalleryImage($id) {
+        $imagenes = $this->db->select("select * from vehiculo_img where id_vehiculo = $id");
+        $contenido = '';
+        foreach ($imagenes as $item) {
+            $id_img = $item['id'];
+            if ($item['principal'] == 1) {
+                $img_principal = '<a class="pointer btnImgPrincipal" id="imgPrincipal' . $id_img . '" data-id="' . $id_img . '"><span class="label label-success">Principal</span></a>';
+                $imgPrincipal = utf8_encode($item['imagen']);
+            } else {
+                $img_principal = '<a class="pointer btnImgPrincipal" id="imgPrincipal' . $id_img . '" data-id="' . $id_img . '"><span class="label label-warning">Principal</span></a>';
+            }
+            if ($item['estado'] == 1) {
+                $mostrar = '<a class="pointer btnMostrarImg" id="mostrarImg' . $id_img . '" data-id="' . $id_img . '"><span class="label label-success">Visible</span></a>';
+            } else {
+                $mostrar = '<a class="pointer btnMostrarImg" id="mostrarImg' . $id_img . '" data-id="' . $id_img . '"><span class="label label-danger">Oculta</span></a>';
+            }
+            $contenido .= '     <div class="col-sm-3" id="imagenGaleria' . $id_img . '">
+                                    <img class="img-responsive" src="' . URL . 'public/archivos/' . utf8_encode($item['imagen']) . '" alt="Photo">
+                                    <p>' . $img_principal . ' | ' . $mostrar . ' | <a class="pointer btnEliminarImg" data-id="' . $id_img . '" id="eliminarImg' . $id_img . '"><span class="label label-danger">Eliminar</span></a></p>
+                                </div>
+                                <!-- /.col -->';
+        }
+        return $contenido;
+    }
+
+    public function loadImage($id) {
+        $item = $this->getImage($id);
+        $id = $item[0]['id'];
+        $img_principal = '<a class="pointer btnImgPrincipal" id="imgPrincipal' . $id . '" data-id="' . $id . '"><span class="label label-warning">Principal</span></a>';
+        $mostrar = '<a class="pointer btnMostrarImg" id="mostrarImg' . $id . '" data-id="' . $id . '"><span class="label label-success">Visible</span></a>';
+        $contenido = '<div class="col-sm-3" id="imagenGaleria' . $id . '">
+                        <img class="img-responsive" src="' . URL . 'public/archivos/' . utf8_encode($item[0]['imagen']) . '" alt="Photo">
+                        <p>' . $img_principal . ' | ' . $mostrar . ' | <a class="pointer btnEliminarImg" data-id="' . $id . '" id="eliminarImg' . $id . '"><span class="label label-danger">Eliminar</span></a></p>
+                      </div>
+                      <!-- /.col -->';
+        return $contenido;
+    }
+
+    public function getImage($id) {
+        $item = $this->db->select("select *
+                                from vehiculo_img 
+                                where id = $id");
+        return $item;
     }
 
 }

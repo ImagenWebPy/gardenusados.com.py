@@ -42,38 +42,37 @@ class Vehiculo_Model extends Model {
     }
 
     public function datosVehiculo($id) {
-        $sqlDatos = $this->db->select("SELECT v.id,
-                                              m.descripcion as marca,
-                                              v.modelo,
-                                              v.version,
-                                              v.ano,
-                                              v.transmision,
-                                              v.precio,
-                                              v.fecha,
-                                              c.descripcion AS condicion,
-                                              com.descripcion AS combustible,
-                                              v.kilometraje,
-                                              v.cantidad_pasajeros,
-                                              tv.descripcion as tipo_vehiculo,
-                                              tt.descripcion as traccion,
-                                              v.motor,
-                                              v.color,
-                                              v.codigo,
-                                              s.descripcion as sede,
-                                              s.telefono,
-                                              s.email,
-                                              s.ciudad,
-                                              v.adicionales,
-                                              e.descripcion as estado
-                                        FROM vehiculo v
-                                        LEFT JOIN marca m ON m.id = v.id_marca
-                                        LEFT JOIN condicion c ON c.id = v.id_condicion
-                                        LEFT JOIN combustible com ON com.id = v.id_combustible
-                                        LEFT JOIN tipo_vehiculo tv on tv.id = v.id_tipo_vehiculo
-                                        LEFT JOIN tipo_traccion tt on tt.id = v.id_tipo_traccion
-                                        LEFT JOIN sede s on s.id = v.id_sede
-                                        LEFT JOIN estado e on e.id = v.id_estado
-                                        WHERE v.id = $id");
+            $sqlDatos = $this->db->select("SELECT v.id,
+                                                  m.descripcion as marca,
+                                                  v.modelo,
+                                                  v.version,
+                                                  v.ano,
+                                                  v.transmision,
+                                                  v.precio,
+                                                  v.fecha,
+                                                  c.descripcion AS condicion,
+                                                  com.descripcion AS combustible,
+                                                  v.kilometraje,
+                                                  v.cantidad_pasajeros,
+                                                  tv.descripcion as tipo_vehiculo,
+                                                  tt.descripcion as traccion,
+                                                  v.motor,
+                                                  v.color,
+                                                  v.codigo,
+                                                  s.descripcion as sede,
+                                                  s.telefono,
+                                                  s.email,
+                                                  s.ciudad,
+                                                  v.adicionales,
+                                                  v.estado
+                                            FROM vehiculo v
+                                            LEFT JOIN marca m ON m.id = v.id_marca
+                                            LEFT JOIN condicion c ON c.id = v.id_condicion
+                                            LEFT JOIN combustible com ON com.id = v.id_combustible
+                                            LEFT JOIN tipo_vehiculo tv on tv.id = v.id_tipo_vehiculo
+                                            LEFT JOIN tipo_traccion tt on tt.id = v.id_tipo_traccion
+                                            LEFT JOIN sede s on s.id = v.id_sede
+                                            WHERE v.id = $id");
         $sqlImagenes = $this->db->select("select imagen, principal from vehiculo_img where id_vehiculo = $id and estado = 1");
         $data['datos'] = array();
         $data['imagenes'] = array();

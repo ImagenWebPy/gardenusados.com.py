@@ -27,7 +27,7 @@ class Admin extends Controller {
         if (!empty($_SESSION['message']))
             unset($_SESSION['message']);
     }
-    
+
     public function marcas() {
         $this->view->public_css = array("admin/plugins/datatables/dataTables.bootstrap.css", "admin/plugins/html5fileupload/html5fileupload.css");
         $this->view->public_js = array("admin/plugins/datatables/jquery.dataTables.min.js", "admin/plugins/datatables/dataTables.bootstrap.min.js", "admin/plugins/html5fileupload/html5fileupload.min.js");
@@ -66,7 +66,7 @@ class Admin extends Controller {
         $data = $this->model->listadoDTMarcas();
         echo $data;
     }
-   
+
     public function listadoDTVehiculos() {
         header('Content-type: application/json; charset=utf-8');
         $data = $this->model->listadoDTVehiculos();
@@ -87,13 +87,13 @@ class Admin extends Controller {
         $data = $this->model->modalAgregarMarca();
         echo $data;
     }
- 
+
     public function modalAgregarVehiculo() {
         header('Content-type: application/json; charset=utf-8');
         $data = $this->model->modalAgregarVehiculo();
         echo $data;
     }
-    
+
     public function modalAgregarSede() {
         header('Content-type: application/json; charset=utf-8');
         $data = $this->model->modalAgregarSede();
@@ -228,6 +228,15 @@ class Admin extends Controller {
         echo $datos;
     }
 
+    public function modalEditarVehiculo() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = array(
+            'id' => $this->helper->cleanInput($_POST['id'])
+        );
+        $datos = $this->model->modalEditarVehiculo($data);
+        echo $datos;
+    }
+
     public function saveEditarModelo() {
         $data = array(
             'id' => $this->helper->cleanInput($_POST['id']),
@@ -346,8 +355,8 @@ class Admin extends Controller {
         $this->model->saveEditarTraccion($data);
         header('Location: ' . URL . 'admin/traccion');
     }
-    
-    public function addSede(){
+
+    public function addSede() {
         $data = array(
             'descripcion' => $this->helper->cleanInput($_POST['descripcion']),
             'ciudad' => $this->helper->cleanInput($_POST['ciudad']),
@@ -359,4 +368,191 @@ class Admin extends Controller {
             'estado' => (!empty($_POST['estado'])) ? $this->helper->cleanInput($_POST['estado']) : 0,
         );
     }
+
+    public function addVehiculo() {
+        $data = array(
+            'id_marca' => $this->helper->cleanInput($_POST['vehiculo']['marca']),
+            'id_combustible' => $this->helper->cleanInput($_POST['vehiculo']['combustible']),
+            'id_condicion' => $this->helper->cleanInput($_POST['vehiculo']['condicion']),
+            'id_tipo_vehiculo' => $this->helper->cleanInput($_POST['vehiculo']['tipo']),
+            'id_tipo_traccion' => $this->helper->cleanInput($_POST['vehiculo']['traccion']),
+            'id_sede' => $this->helper->cleanInput($_POST['vehiculo']['sede']),
+            'codigo' => $this->helper->cleanInput($_POST['vehiculo']['codigo']),
+            'modelo' => $this->helper->cleanInput($_POST['vehiculo']['modelo']),
+            'version' => $this->helper->cleanInput($_POST['vehiculo']['version']),
+            'ano' => $this->helper->cleanInput($_POST['vehiculo']['sno']),
+            'color' => $this->helper->cleanInput($_POST['vehiculo']['color']),
+            'transmision' => $this->helper->cleanInput($_POST['vehiculo']['transmision']),
+            'motor' => $this->helper->cleanInput($_POST['vehiculo']['motor']),
+            'precio' => $this->helper->cleanInput($_POST['vehiculo']['precio']),
+            'cuotas' => $this->helper->cleanInput($_POST['vehiculo']['cuotas']),
+            'adicionales' => $this->helper->cleanInput($_POST['vehiculo']['adicionales']),
+            'kilometraje' => $this->helper->cleanInput($_POST['vehiculo']['kilometraje']),
+            'cantidad_pasajeros' => $this->helper->cleanInput($_POST['vehiculo']['pasajeros']),
+            'fecha' => date('Y-m-d H:i:s'),
+            'estado' => $this->helper->cleanInput($_POST['vehiculo']['estado'])
+        );
+        $datos = $this->model->addVehiculo($data);
+        $id = $datos;
+        #SUBIMOS LOS ARCHIVOS
+        $error = false;
+        $absolutedir = dirname(__FILE__);
+        $dir = 'public/archivos/';
+        $serverdir = $dir;
+        #IMAGENES
+        $cantImagenes = count($_FILES['file_archivo']['name']) - 1;
+        $imagenes = array();
+        for ($i = 0; $i <= $cantImagenes; $i++) {
+            $newname = $id . '_' . $_FILES['file_archivo']['name'][$i];
+            $fname = $this->helper->cleanUrl($newname);
+
+            $contents = file_get_contents($_FILES['file_archivo']['tmp_name'][$i]);
+
+            $handle = fopen($serverdir . $fname, 'w');
+            fwrite($handle, $contents);
+            fclose($handle);
+            #############
+            #SE REDIMENSIONA LA IMAGEN
+            #############
+            # ruta de la imagen a redimensionar 
+            $imagen = "public/archivos/$fname";
+            # ruta de la imagen final, si se pone el mismo nombre que la imagen, esta se sobreescribe 
+            $imagen_final = $fname;
+            $ancho = 1280;
+            $alto = 720;
+            $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto);
+            #############
+            $imagenes [] = $fname;
+        }
+        $dataFiles = array(
+            'id' => $id,
+            'imagenes' => $imagenes,
+        );
+        $this->model->addVehiculoImg($dataFiles);
+        header('Location: ' . URL . 'admin/vehiculos');
+    }
+
+    public function imgPrincipal() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = array(
+            'id' => $this->helper->cleanInput($_POST['id'])
+        );
+        $datos = $this->model->imgPrincipal($data);
+        echo json_encode($datos);
+    }
+
+    public function mostrarImgBtn() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = array(
+            'id' => $this->helper->cleanInput($_POST['id'])
+        );
+        $datos = $this->model->mostrarImgBtn($data);
+        echo json_encode($datos);
+    }
+
+    public function eliminarIMG() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = array(
+            'id' => $this->helper->cleanInput($_POST['id'])
+        );
+        $datos = $this->model->eliminarIMG($data);
+        echo json_encode($datos);
+    }
+
+    public function modalEliminarVehiculo() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = array(
+            'id' => $this->helper->cleanInput($_POST['id'])
+        );
+        $datos = $this->model->modalEliminarVehiculo($data);
+        echo $datos;
+    }
+
+    public function deleteVehiculo() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = array(
+            'id' => $this->helper->cleanInput($_POST['id'])
+        );
+        $data = $this->model->deleteVehiculo($data);
+        echo json_encode($data);
+    }
+
+    public function uploadImageVehiculo() {
+        if (!empty($_POST)) {
+            $idPost = $_POST['data']['id'];
+
+            $error = false;
+            $absolutedir = dirname(__FILE__);
+            $dir = 'public/archivos/';
+            $serverdir = $dir;
+            $tmp = explode(',', $_POST['file']);
+            $file = base64_decode($tmp[1]);
+            $ext = explode('.', $_POST['filename']);
+            $extension = strtolower(end($ext));
+            $name = $_POST['name'];
+            $filename = $this->helper->cleanUrl($idPost . '_' . $name);
+            $filename = $filename . '.' . $extension;
+            //$filename				= $file.'.'.substr(sha1(time()),0,6).'.'.$extension;
+
+            $handle = fopen($serverdir . $filename, 'w');
+            fwrite($handle, $file);
+            fclose($handle);
+            #############
+            #SE REDIMENSIONA LA IMAGEN
+            #############
+            # ruta de la imagen a redimensionar 
+            $imagen = "public/archivos/$filename";
+            # ruta de la imagen final, si se pone el mismo nombre que la imagen, esta se sobreescribe 
+            $imagen_final = $filename;
+            $ancho = 640;
+            $alto = 480;
+            $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto);
+            #############
+            header('Content-type: application/json; charset=utf-8');
+            $data = array(
+                'id' => $idPost,
+                'archivo' => $filename
+            );
+            $response = $this->model->uploadImageVehiculo($data);
+            echo json_encode($response);
+            //echo json_encode(array('result'=>true));
+        } else {
+            $filename = basename($_SERVER['QUERY_STRING']);
+            $file_url = '/public/archivos/' . $filename;
+            header('Content-Type: 				application/octet-stream');
+            header("Content-Transfer-Encoding: 	Binary");
+            header("Content-disposition: 		attachment; filename=\"" . basename($file_url) . "\"");
+            readfile($file_url);
+            exit();
+        }
+    }
+
+    public function editVehiculo() {
+        header('Content-type: application/json; charset=utf-8');
+        $data = array(
+            'id' => $this->helper->cleanInput($_POST['vehiculo']['id']),
+            'id_marca' => $this->helper->cleanInput($_POST['vehiculo']['marca']),
+            'id_combustible' => $this->helper->cleanInput($_POST['vehiculo']['combustible']),
+            'id_condicion' => $this->helper->cleanInput($_POST['vehiculo']['condicion']),
+            'id_tipo_vehiculo' => $this->helper->cleanInput($_POST['vehiculo']['tipo']),
+            'id_tipo_traccion' => $this->helper->cleanInput($_POST['vehiculo']['traccion']),
+            'id_sede' => $this->helper->cleanInput($_POST['vehiculo']['sede']),
+            'codigo' => $this->helper->cleanInput($_POST['vehiculo']['codigo']),
+            'modelo' => $this->helper->cleanInput($_POST['vehiculo']['modelo']),
+            'version' => $this->helper->cleanInput($_POST['vehiculo']['version']),
+            'ano' => $this->helper->cleanInput($_POST['vehiculo']['ano']),
+            'color' => $this->helper->cleanInput($_POST['vehiculo']['color']),
+            'transmision' => $this->helper->cleanInput($_POST['vehiculo']['transmision']),
+            'motor' => $this->helper->cleanInput($_POST['vehiculo']['motor']),
+            'precio' => $this->helper->cleanInput($_POST['vehiculo']['precio']),
+            'cuotas' => $this->helper->cleanInput($_POST['vehiculo']['cuotas']),
+            'adicionales' => $this->helper->cleanInput($_POST['vehiculo']['adicionales']),
+            'kilometraje' => $this->helper->cleanInput($_POST['vehiculo']['kilometraje']),
+            'cantidad_pasajeros' => $this->helper->cleanInput($_POST['vehiculo']['pasajeros']),
+            'estado' => (!empty($_POST['vehiculo']['estado'])) ? $_POST['vehiculo']['estado'] : 0
+        );
+        $data = $this->model->editVehiculo($data);
+        echo json_encode($data);
+    }
+
 }

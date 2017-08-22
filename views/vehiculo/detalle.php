@@ -84,6 +84,14 @@ $marcas = $helper->getGardenMarcas();
                             <h2 class="s-titleDet">Características</h2>
                             <div class="row">
                                 <div class="col-xs-6">
+                                    <h4 class="b-detail__main-aside-desc-title">Condición</h4>
+                                </div>
+                                <div class="col-xs-6">
+                                    <p class="b-detail__main-aside-desc-value"><?= utf8_encode($datos[0]['condicion']); ?></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
                                     <h4 class="b-detail__main-aside-desc-title">Código</h4>
                                 </div>
                                 <div class="col-xs-6">

@@ -4,7 +4,7 @@ $listado = $this->listado;
 ?>
 <section class="b-pageHeader">
     <div class="container">
-        <h1 class="wow zoomInLeft" data-wow-delay="0.5s">Usados</h1>
+        <h1 class="wow zoomInLeft" data-wow-delay="0.5s">Saldos de Stock 0Km</h1>
     </div>
 </section><!--b-pageHeader-->
 <div class="b-breadCumbs s-shadow">

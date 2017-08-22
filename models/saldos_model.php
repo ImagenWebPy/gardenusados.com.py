@@ -25,7 +25,8 @@ class Saldos_Model extends Model {
                                         c.descripcion AS condicion,
                                         com.descripcion AS combustible,
                                         vi.imagen,
-                                        v.kilometraje
+                                        v.kilometraje,
+                                        v.estado
                                 FROM vehiculo v
                                 LEFT JOIN marca m ON m.id = v.id_marca
                                 LEFT JOIN condicion c ON c.id = v.id_condicion
@@ -33,6 +34,7 @@ class Saldos_Model extends Model {
                                 LEFT JOIN vehiculo_img vi ON vi.id_vehiculo = v.id
                                 WHERE vi.principal = 1
                                 and c.id = 2
+                                and v.estado = 1
                                 ORDER BY v.id desc
                                 LIMIT $pageLimit, $setLimit");
         $condicion = "FROM vehiculo v
@@ -41,6 +43,7 @@ class Saldos_Model extends Model {
                                 LEFT JOIN combustible com ON com.id = v.id_combustible
                                 LEFT JOIN vehiculo_img vi ON vi.id_vehiculo = v.id
                                 WHERE vi.principal = 1
+                                and v.estado = 1
                                 and c.id = 2";
         $data = array(
             'listado' => $sql,

@@ -11,36 +11,36 @@ $sede = $helper->getSedes();
         <div class="carousel-inner">
             <div class="item active">
                 <img src="<?= MEDIA; ?>main-slider/1.jpg" alt="sliderImg" />
-                <div class="container">
+<!--                <div class="container">
                     <div class="carousel-caption b-slider__info">
                         <h3>Find your dream</h3>
                         <h2>Lamborghini Aventador</h2>
                         <p>Model 2015 <span>$184,900</span></p>
                         <a class="btn m-btn" href="detail.html">see details<span class="fa fa-angle-right"></span></a>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="item">
                 <img src="<?= MEDIA; ?>main-slider/2.jpg" alt="sliderImg" />
-                <div class="container">
+<!--                <div class="container">
                     <div class="carousel-caption b-slider__info">
                         <h3>Find your dream</h3>
                         <h2>Lamborghini Aventador</h2>
                         <p>Model 2015 <span>$184,900</span></p>
                         <a class="btn m-btn" href="detail.html">see details<span class="fa fa-angle-right"></span></a>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="item">
                 <img src="<?= MEDIA; ?>main-slider/3.jpg"  alt="sliderImg"/>
-                <div class="container">
+<!--                <div class="container">
                     <div class="carousel-caption b-slider__info">
                         <h3>Find your dream</h3>
                         <h2>Lamborghini Aventador</h2>
                         <p>Model 2015 <span>$184,900</span></p>
                         <a class="btn m-btn" href="detail.html">see details<span class="fa fa-angle-right"></span></a>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <a class="carousel-control right" href="#carousel" data-slide="next">

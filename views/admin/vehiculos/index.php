@@ -43,6 +43,7 @@ $helper = new Helper();
                                     <th>Precio</th>
                                     <th>Sede</th>
                                     <th>Estado</th>
+                                    <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,6 +57,7 @@ $helper = new Helper();
                                     <th>Precio</th>
                                     <th>Sede</th>
                                     <th>Estado</th>
+                                    <th>Acción</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -80,7 +82,7 @@ $helper = new Helper();
             //"scrollX": true,
             //"scrollCollapse": true,
             "fixedColumns": true,
-            //"iDisplayLength": 50,
+            "iDisplayLength": 20,
             "ajax": {
                 "url": "<?= URL ?>admin/listadoDTVehiculos/",
                 "type": "post"
@@ -92,7 +94,8 @@ $helper = new Helper();
                 {"data": "version"},
                 {"data": "precio"},
                 {"data": "sede"},
-                {"data": "estado"}
+                {"data": "estado"},
+                {"data": "accion"}
             ],
             "language": {
                 "url": "<?= URL ?>public/language/Spanish.json"
@@ -113,6 +116,134 @@ $helper = new Helper();
                 });
             }
             e.handled = true;
+        });
+        $(document).on("click", ".btnEditarVehiculo", function (e) {
+            if (e.handled !== true) // This will prevent event triggering more then once
+            {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: "<?= URL; ?>admin/modalEditarVehiculo",
+                    type: "POST",
+                    data: {id: id},
+                    dataType: "json"
+                }).done(function (data) {
+                    $(".genericModal .modal-header").removeClass("modal-header").addClass("modal-header bg-primary");
+                    $(".genericModal .modal-title").html(data['marca']);
+                    $(".genericModal .modal-body").html(data['contenido']);
+                    $(".genericModal").modal("toggle");
+                });
+            }
+            e.handled = true;
+        });
+        $(document).on("click", ".btnEliminarVehiculo", function (e) {
+            if (e.handled !== true) // This will prevent event triggering more then once
+            {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: "<?= URL; ?>admin/modalEliminarVehiculo",
+                    type: "POST",
+                    data: {id: id},
+                    dataType: "json"
+                }).done(function (data) {
+                    $(".genericModal .modal-header").removeClass("modal-header").addClass("modal-header bg-primary");
+                    $(".genericModal .modal-title").html(data['titulo']);
+                    $(".genericModal .modal-body").html(data['contenido']);
+                    $(".genericModal").modal("toggle");
+                });
+            }
+            e.handled = true;
+        });
+        $(document).on("click", ".btnImgPrincipal", function (e) {
+            if (e.handled !== true) // This will prevent event triggering more then once
+            {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: "<?= URL; ?>admin/imgPrincipal",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.result != false) {
+                            $('#imgPrincipal' + data.id).html(data.content);
+                            $('#imgPrincipal' + data.id_old).html(data.content_old);
+                        }
+                    }
+                }); //END AJAX
+            }
+            e.handled = true;
+        });
+        $(document).on("click", ".btnMostrarImg", function (e) {
+            if (e.handled !== true) // This will prevent event triggering more then once
+            {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: "<?= URL; ?>admin/mostrarImgBtn",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        $('#mostrarImg' + data.id).html(data.content);
+                    }
+                }); //END AJAX
+            }
+            e.handled = true;
+        });
+        $(document).on("click", ".btnEliminarImg", function (e) {
+            if (e.handled !== true) // This will prevent event triggering more then once
+            {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: "<?= URL; ?>admin/eliminarIMG",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        if (data.result != false) {
+                            $("#imagenGaleria" + data.id).remove();
+                        }
+                    }
+                }); //END AJAX
+            }
+            e.handled = true;
+        });
+        $(document).on("submit", "#frmEliminarVehiculo", function (e) {
+            var url = "<?= URL ?>admin/deleteVehiculo"; // the script where you handle the form input.
+            var id = $("#btnDeleteVehiculo").attr("data-id");
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {id: id}, // serializes the form's elements.
+                success: function (data)
+                {
+                    if (data['type'] == 'success') {
+                        $("#vehiculo_" + data['id']).remove();
+                        $(".genericModal").modal("toggle");
+                    }
+                }
+            });
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+        });
+        $(document).on("submit", "#frmEditarVehiculo", function (e) {
+            var url = "<?= URL ?>admin/editVehiculo"; // the script where you handle the form input.
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: $("#frmEditarVehiculo").serialize(), // serializes the form's elements.
+                success: function (data)
+                {
+                    if (data['type'] == 'success') {
+                        $("#vehiculo_" + data['id']).html(data['row']);
+                        $(".genericModal").modal("toggle");
+                    }
+                }
+            });
+            e.preventDefault(); // avoid to execute the actual submit of the form.
         });
     });
 </script>

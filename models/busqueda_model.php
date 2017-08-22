@@ -46,6 +46,7 @@ class Busqueda_Model extends Model {
                                 LEFT JOIN combustible com ON com.id = v.id_combustible
                                 LEFT JOIN vehiculo_img vi ON vi.id_vehiculo = v.id
                                 WHERE vi.principal = 1
+                                and v.estado = 1
                                 $where
                                 ORDER BY v.id desc
                                 LIMIT $pageLimit, $setLimit");
@@ -55,6 +56,7 @@ class Busqueda_Model extends Model {
                                 LEFT JOIN combustible com ON com.id = v.id_combustible
                                 LEFT JOIN vehiculo_img vi ON vi.id_vehiculo = v.id
                                 WHERE vi.principal = 1
+                                and v.estado = 1
                                 $where";
         $data = array(
             'listado' => $sql,
