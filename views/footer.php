@@ -145,5 +145,4 @@ if (!empty($url)):
 endif;
 ?>
 </body>
-<!-- Mirrored from templines.rocks/html/sokolcov/auto-club/home.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Jul 2017 14:12:31 GMT -->
 </html>

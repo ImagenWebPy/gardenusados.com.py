@@ -37,7 +37,8 @@ $helper = new Helper();
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Fecha</th>
+                                    <th>Fecha Carga</th>
+                                    <th>Código</th>
                                     <th>Marca</th>
                                     <th>Modelo</th>
                                     <th>Version</th>
@@ -53,7 +54,8 @@ $helper = new Helper();
                             <tfoot>
                                 <tr>
                                     <th>#</th>
-                                    <th>Fecha</th>
+                                    <th>Fecha Carga</th>
+                                    <th>Código</th>
                                     <th>Modelo</th>
                                     <th>Version</th>
                                     <th>Precio</th>
@@ -84,7 +86,7 @@ $helper = new Helper();
             //"scrollX": true,
             //"scrollCollapse": true,
             "fixedColumns": true,
-            "iDisplayLength": 20,
+            "iDisplayLength": 25,
             "ajax": {
                 "url": "<?= URL ?>admin/listadoDTVehiculos/",
                 "type": "post"
@@ -92,6 +94,7 @@ $helper = new Helper();
             "columns": [
                 {"data": "id"},
                 {"data": "fecha"},
+                {"data": "codigo"},
                 {"data": "marca"},
                 {"data": "modelo"},
                 {"data": "version"},

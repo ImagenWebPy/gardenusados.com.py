@@ -41,7 +41,8 @@ class Admin_Model extends Model {
                                         v.estado,
                                         s.ciudad,
                                         s.descripcion as sede,
-                                        v.estado
+                                        v.estado,
+                                        v.codigo
                                 from vehiculo v
                                 LEFT JOIN marca ma on ma.id = v.id_marca
                                 LEFT JOIN sede s on s.id = v.id_sede
@@ -65,6 +66,7 @@ class Admin_Model extends Model {
                 "DT_RowId" => "vehiculo_$id",
                 'id' => $id,
                 'fecha' => date('d/m/Y', strtotime($item['fecha'])),
+                'codigo' => utf8_encode($item['codigo']),
                 'marca' => utf8_encode($item['marca']),
                 'modelo' => utf8_encode($item['modelo']),
                 'version' => utf8_encode($item['version']),

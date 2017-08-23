@@ -8,6 +8,18 @@
 // Always provide a TRAILING SLASH (/) AFTER A PATH
 $host = getHost();
 switch ($host) {
+    case 'gardenusados.com.py':
+        define('URL', 'http://www.gardenusados.com.py/');
+        define('DB_USER', 'web');
+        define('DB_PASS', 'WebG@rdenMKT');
+        define('DB_NAME', 'usados');
+        break;
+    case 'www.gardenusados.com.py':
+        define('URL', 'http://www.gardenusados.com.py/');
+        define('DB_USER', 'web');
+        define('DB_PASS', 'WebG@rdenMKT');
+        define('DB_NAME', 'usados');
+        break;
     case 'localhost':
         define('URL', 'http://localhost/gardenusados.com.py/');
         define('DB_USER', 'root');

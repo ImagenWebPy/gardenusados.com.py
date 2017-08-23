@@ -61,6 +61,17 @@ class Admin extends Controller {
             unset($_SESSION['message']);
     }
 
+    public function slider() {
+        $this->view->public_css = array("admin/plugins/datatables/dataTables.bootstrap.css", "admin/plugins/html5fileupload/html5fileupload.css");
+        $this->view->public_js = array("admin/plugins/datatables/jquery.dataTables.min.js", "admin/plugins/datatables/dataTables.bootstrap.min.js", "admin/plugins/html5fileupload/html5fileupload.min.js");
+        $this->view->title = 'Slider';
+        $this->view->render('admin/header');
+        $this->view->render('admin/slider/index');
+        $this->view->render('admin/footer');
+        if (!empty($_SESSION['message']))
+            unset($_SESSION['message']);
+    }
+
     public function listadoDTMarcas() {
         header('Content-type: application/json; charset=utf-8');
         $data = $this->model->listadoDTMarcas();
@@ -129,7 +140,7 @@ class Admin extends Controller {
                 $imagen_final = $fname;
                 $ancho = 276;
                 $alto = 174;
-                $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto);
+                $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto, $serverdir);
                 #############
                 $imagenes [] = $fname;
             }
@@ -181,7 +192,7 @@ class Admin extends Controller {
                 $imagen_final = $fname;
                 $ancho = 276;
                 $alto = 174;
-                $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto);
+                $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto, $serverdir);
                 #############
                 $imagenes [] = $fname;
             }
@@ -420,7 +431,7 @@ class Admin extends Controller {
             $imagen_final = $fname;
             $ancho = 1280;
             $alto = 720;
-            $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto);
+            $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto, $serverdir);
             #############
             $imagenes [] = $fname;
         }
@@ -506,7 +517,7 @@ class Admin extends Controller {
             $imagen_final = $filename;
             $ancho = 640;
             $alto = 480;
-            $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto);
+            $this->helper->redimensionar($imagen, $imagen_final, $ancho, $alto, $serverdir);
             #############
             header('Content-type: application/json; charset=utf-8');
             $data = array(
