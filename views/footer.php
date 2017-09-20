@@ -34,7 +34,7 @@ $url = $helper->getUrl();
                         <div class="b-info__latest-article wow zoomInUp" data-wow-delay="0.3s">
                             <div class="b-info__latest-article-photo"><img src="<?= PUBLIC_FOLDER; ?>/archivos/<?= $item['imagen']; ?>" class="img-responsive"></div>
                             <div class="b-info__latest-article-info">
-                                <h6><a href="<?= URL; ?>/vehiculo/<?= $item['id']; ?>/<?= $helper->cleanUrl($nombre) ?>"><?= $nombre; ?></a></h6>
+                                <h6><a href="<?= URL; ?>vehiculo/detalle/<?= $item['id']; ?>/<?= $helper->cleanUrl($nombre) ?>"><?= $nombre; ?></a></h6>
                                 <?php if (!empty($item['kilometraje'])): ?>
                                     <div class="b-items__cell-info-km">
                                         <span class="fa fa-tachometer"></span>

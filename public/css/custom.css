@@ -1,7 +1,7 @@
 .borderRightNone {border-right: none !important;}
 .logoSize {width: 70%; position: relative; top: -5px;}
 .logoSizeFooter {width: 40%; position: relative; top: -5px;}
-.h2List {display: inline-block;}
+.h2List {display: inline-block; font-size: 12px !important;}
 .resizeLogoList{ width: 40%;}
 .paddingCorrectionList { padding-right: 6px !important;}
 .heightCorrectionList{ height: 100%;}
