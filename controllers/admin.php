@@ -560,7 +560,8 @@ class Admin extends Controller {
             'adicionales' => $this->helper->cleanInput($_POST['vehiculo']['adicionales']),
             'kilometraje' => $this->helper->cleanInput($_POST['vehiculo']['kilometraje']),
             'cantidad_pasajeros' => $this->helper->cleanInput($_POST['vehiculo']['pasajeros']),
-            'estado' => (!empty($_POST['vehiculo']['estado'])) ? $_POST['vehiculo']['estado'] : 0
+            'estado' => (!empty($_POST['vehiculo']['estado'])) ? $_POST['vehiculo']['estado'] : 0,
+            'vendido' => (!empty($_POST['vehiculo']['vendido'])) ? $_POST['vehiculo']['vendido'] : 0
         );
         $data = $this->model->editVehiculo($data);
         echo json_encode($data);

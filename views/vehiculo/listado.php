@@ -30,10 +30,13 @@ $listado = $this->listado;
                                     <?php if ($item['condicion'] == '0km'): ?>
                                         <span class="b-items__cars-one-img-type m-premium">0KM</span>
                                     <?php endif; ?>
+                                    <?php if ($item['vendido'] == 1): ?>
+                                        <span class="b-items__cars-one-img-type m-owner">VENDIDO</span>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="b-items__cell-info">
                                     <div class="s-lineDownLeft b-items__cell-info-title">
-                                        <a href="<?= $url ?>"><h2 class="h2List"><?= $nombre; ?></h2></a>
+                                        <a href="<?= $url ?>"><h2 class="h2List"><?= strtoupper($nombre); ?></h2></a>
                                     </div>
                                     <div class="row m-smallPadding">
                                         <div class="col-xs-6">

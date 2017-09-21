@@ -26,7 +26,8 @@ class Saldos_Model extends Model {
                                         com.descripcion AS combustible,
                                         vi.imagen,
                                         v.kilometraje,
-                                        v.estado
+                                        v.estado,
+                                        v.vendido
                                 FROM vehiculo v
                                 LEFT JOIN marca m ON m.id = v.id_marca
                                 LEFT JOIN condicion c ON c.id = v.id_condicion

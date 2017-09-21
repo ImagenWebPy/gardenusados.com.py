@@ -25,7 +25,8 @@ class Usados_Model extends Model {
                                         c.descripcion AS condicion,
                                         com.descripcion AS combustible,
                                         vi.imagen,
-                                        v.kilometraje
+                                        v.kilometraje,
+                                        v.vendido
                                 FROM vehiculo v
                                 LEFT JOIN marca m ON m.id = v.id_marca
                                 LEFT JOIN condicion c ON c.id = v.id_condicion

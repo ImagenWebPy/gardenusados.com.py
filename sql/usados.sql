@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : AWS
-Source Server Version : 50556
-Source Host           : 34.209.83.134:3306
+Source Server         : localhost
+Source Server Version : 50714
+Source Host           : localhost:3306
 Source Database       : usados
 
 Target Server Type    : MYSQL
-Target Server Version : 50556
+Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-09-20 16:19:17
+Date: 2017-09-21 14:50:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -359,13 +359,14 @@ CREATE TABLE `vehiculo` (
   `color` varchar(120) DEFAULT NULL,
   `transmision` varchar(120) DEFAULT NULL,
   `motor` varchar(120) DEFAULT NULL,
-  `precio` decimal(7,2) DEFAULT NULL,
+  `precio` decimal(20,2) DEFAULT NULL,
   `cuotas` varchar(120) DEFAULT NULL,
   `adicionales` text,
   `kilometraje` int(7) DEFAULT NULL,
   `cantidad_pasajeros` int(2) DEFAULT NULL,
   `fecha` datetime DEFAULT NULL,
   `estado` int(1) NOT NULL DEFAULT '1',
+  `vendido` int(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_id_combustible_vehiculo` (`id_combustible`),
   KEY `fk_id_condicion_vehiculo` (`id_condicion`),
@@ -382,53 +383,53 @@ CREATE TABLE `vehiculo` (
 -- ----------------------------
 -- Records of vehiculo
 -- ----------------------------
-INSERT INTO `vehiculo` VALUES ('1', '17', '3', '1', '12', '1', '1', '235748', 'Picano', null, '2012', 'Celeste', 'Automática', '1.0', '8000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-24 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('2', '45', '3', '1', '8', '1', '3', '566930', 'Sonic', 'LT', '2013', 'Plata', 'Mecánica 6 Vel.', '1.6', '18900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('3', '26', '1', '1', '12', '1', '3', '83378', 'MINI Countryman', 'ONE', '2011', 'Plata', 'Mecánica 6 Vel.', '1.6', '19900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('4', '17', '1', '1', '1', '1', '3', '249824', 'Rio', null, '2013', 'Azul', 'Automática', '1.4', '15600.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('5', '17', '1', '1', '12', '1', '3', '974886', 'Picanto', 'LX', '2011', 'Blanco', 'Mecánica 5 Vel.', '1.1', '7000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('6', '47', '2', '1', '10', '5', '3', '5099949', '2500', 'Laramie', '2011', 'Negro', 'Automática', '6.7', '39500.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('7', '45', '2', '1', '10', '5', '3', '166203', 'S10', 'C/S', '2004', 'Plata', 'Mecánica 5 Vel.', '2.8 Turbo', '15500.00', 'Hasta 48 Cuotas', null, null, '3', '2016-07-26 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('8', '23', '2', '1', '10', '5', '3', '884052', 'BT-50', 'D/C', '2011', 'Plata', 'Mecánica 5 Vel.', '2.5', '19900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('9', '16', '1', '1', '3', '5', '3', '520145', 'Grand Cherokee', 'LIMITED', '2011', 'Plata', 'Automática', '3.6', '39000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('10', '40', '1', '1', '3', '5', '3', '601003', 'Grand Vitara', '3P', '2011', 'Plata', 'Mecánica 5 Vel.', '1.6', '16500.00', 'Hasta 48 Cuotas', null, null, '2', '2016-07-26 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('11', '45', '3', '1', '7', '1', '3', '268719', 'Spin', 'LT', '2013', 'Gris Rusk', 'Mecánica 5 Vel.', '1.8', '17000.00', 'Hasta 48 Cuotas', null, null, '7', '2016-07-26 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('12', '17', '2', '1', '3', '5', '3', '874323', 'Sorento', 'EX Full', '2009', 'Beige', 'Mecánica 5 Vel.', '2.5', '19000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1');
-INSERT INTO `vehiculo` VALUES ('22', '10', '1', '1', '7', '1', '1', 'U00716', 'Palio', 'Adventure', '2006', 'Blanco', 'Mecánica', '1.8CC', '7500.00', 'Hasta 60 cuotas', null, null, null, '2017-08-22 17:26:42', '1');
-INSERT INTO `vehiculo` VALUES ('23', '16', '2', '1', '3', '5', '1', 'U01288', 'Grand Cherokee', 'Limited', '2012', 'Blanco', 'Automática', '3.0CC', '57000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-22 17:52:33', '1');
-INSERT INTO `vehiculo` VALUES ('24', '16', '3', '1', '3', '5', '1', 'U01521', 'Grand Cherokee', 'Limited', '2012', 'Negro', 'Automática', '3.6CC', '40000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-22 17:56:42', '1');
-INSERT INTO `vehiculo` VALUES ('25', '16', '3', '1', '3', '5', '1', 'U01402', 'Grand Cherokee', 'Limited', '2012', 'Plata', 'Automática', '3.6CC', '39000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-22 18:08:28', '1');
-INSERT INTO `vehiculo` VALUES ('26', '17', '2', '1', '7', '1', '1', 'U01504', 'Carnival', 'EX', '2012', 'Blanco', 'Automática', '2.9CC', '27000.00', 'Hasta 48 Cuotas', null, null, null, '2017-08-23 09:01:04', '1');
-INSERT INTO `vehiculo` VALUES ('27', '17', '2', '1', '7', '1', '1', 'U01452', 'Carnival', 'EX', '2009', 'Negro', 'Automática', '2.9CC', '17000.00', 'Hasta 48 Cuotas', null, null, null, '2017-08-23 09:05:57', '1');
-INSERT INTO `vehiculo` VALUES ('28', '17', '1', '1', '1', '1', '1', 'U01348', 'Optima', 'EX', '2014', 'Plata', 'Automática', '2.4', '25000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:13:18', '1');
-INSERT INTO `vehiculo` VALUES ('29', '26', '1', '1', '12', '1', '1', 'U01479', 'Clubman', 'Cooper S', '2013', 'Rojo / Techo Negro', 'Automática', '1.6CC', '39000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:19:16', '1');
-INSERT INTO `vehiculo` VALUES ('30', '26', '1', '1', '12', '5', '1', 'U01481', 'Countryman', 'Cooper S', '2011', 'Gris Oscuro', 'Automática', '1.6CC', '24800.00', 'Hasta 60 cuotas', null, null, null, '2017-08-23 09:23:07', '1');
-INSERT INTO `vehiculo` VALUES ('31', '26', '1', '1', '12', '1', '1', 'U01125', 'Hatch', 'Cooper S', '2012', 'Negro', 'Automática', '1.6CC', '35000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:26:29', '1');
-INSERT INTO `vehiculo` VALUES ('32', '26', '1', '1', '12', '5', '1', 'U01534', 'Countryman', 'Cooper S', '2014', 'Blanco / Techo Negro', 'Automática', '1.6CC', '43000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:29:43', '1');
-INSERT INTO `vehiculo` VALUES ('33', '26', '1', '1', '12', '1', '1', 'U00996', 'Hatch', 'Cooper', '2011', 'Beige', 'Mecánica', '1.6CC', '23000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:33:19', '1');
-INSERT INTO `vehiculo` VALUES ('34', '28', '1', '1', '3', '1', '1', 'U00595', 'Murano', null, '2008', 'Plata', 'Automática', '3.5CC', '22000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:36:24', '1');
-INSERT INTO `vehiculo` VALUES ('35', '45', '3', '1', '8', '1', '3', '132524', 'Agile', 'LTZ', '2012', 'Plata', 'Mecánica', '1.4', '10500.00', 'Hasta 48 meses', null, null, null, '2017-08-23 09:39:31', '1');
-INSERT INTO `vehiculo` VALUES ('36', '17', '1', '1', '1', '1', '3', '040073', 'Rio', 'Sedan', '2012', 'Gris Oscuro', 'Automática', '1.4', '15500.00', 'Hasta 48 Meses', null, null, null, '2017-08-23 09:42:57', '1');
-INSERT INTO `vehiculo` VALUES ('37', '33', '3', '1', '1', '1', '3', '563405', 'Symbol', 'Sedan', '2011', 'Rojo', 'Mecánica', '1.6', '10000.00', 'Hasta 48 meses', null, null, null, '2017-08-23 09:46:10', '1');
-INSERT INTO `vehiculo` VALUES ('38', '45', '1', '1', '1', '1', '3', '155981', 'New Corsa', null, '2007', 'Blanco', 'Mecánica', '1.8', '8000.00', 'Hasta 36 meses', null, null, null, '2017-08-23 09:48:56', '1');
-INSERT INTO `vehiculo` VALUES ('39', '45', '2', '1', '3', '5', '3', '017427', 'Captiva', 'LTZ', '2012', 'Beige', 'Automática', '2.2', '34000.00', 'Hasta 48 meses', null, null, null, '2017-08-23 09:52:05', '1');
-INSERT INTO `vehiculo` VALUES ('40', '17', '2', '1', '3', '5', '3', '046442', 'Mohave', 'EX A/T', '2009', 'Blanco', 'Automática', '3.0', '26000.00', 'Hasta 48 meses', null, null, null, '2017-08-23 09:58:57', '1');
-INSERT INTO `vehiculo` VALUES ('41', '4', '1', '1', '3', '1', '3', '069205', 'Q5', 'FSI', '2011', 'Negro', 'Automática', '3.2', '41500.00', 'Hasta 48 meses', null, null, null, '2017-08-23 10:16:14', '1');
-INSERT INTO `vehiculo` VALUES ('42', '49', '2', '1', '10', '5', '3', '000029', 'QD32T', 'D/C', '2013', 'Azul', 'Mecánica de 5 Vel.', '3.2', '17500.00', 'Hasta 48 meses', null, null, null, '2017-08-23 11:00:35', '1');
-INSERT INTO `vehiculo` VALUES ('43', '46', '1', '1', '3', '3', '1', 'U01920', 'Durango', 'LIMITED', '2014', 'Bordó', 'Automática', '3.6L V6', '39000.00', 'Hasta 60 Cuotas', null, '37995', null, '2017-09-20 11:36:10', '1');
-INSERT INTO `vehiculo` VALUES ('44', '46', '1', '1', '3', '1', '1', 'U02123', 'Durango', 'SXT', '2013', 'Grafito', 'Automática', '3.6L V6', '27000.00', 'Hasta 60 Cuotas', null, '57293', null, '2017-09-20 11:49:55', '1');
-INSERT INTO `vehiculo` VALUES ('45', '16', '1', '1', '3', '4', '1', 'U02144', 'WRANGLER', 'Rubicon', '2016', 'Plata', 'Automática', '3.6', '49000.00', 'Hasta 60 Cuotas', null, '10986', null, '2017-09-20 11:54:36', '1');
-INSERT INTO `vehiculo` VALUES ('46', '6', '2', '1', '3', '5', '1', 'U02053', 'X5', 'XDRIVE', '2011', 'Azul', 'Automática', '3.0 TDI', '45000.00', 'Hasta 60 Cuotas', null, '116385', null, '2017-09-20 14:12:41', '1');
-INSERT INTO `vehiculo` VALUES ('47', '43', '2', '1', '3', '5', '1', 'U01753', 'TOUAREG', 'DSL', '2009', 'Verde', 'Automática', '3.0', '33000.00', 'Hasta 60 cuotas', null, '83582', null, '2017-09-20 14:26:17', '1');
-INSERT INTO `vehiculo` VALUES ('48', '38', '2', '1', '10', '5', '1', 'U01957', 'KYRON', 'DSL', '2008', 'Negro', 'Automática', '2.0', '11500.00', 'Hasta 60 Cuotas', null, '88215', null, '2017-09-20 14:38:22', '1');
-INSERT INTO `vehiculo` VALUES ('49', '16', '3', '1', '3', '1', '1', 'U02111', 'Renegade', 'LONGITUDE', '2016', 'Negro', 'Automática', 'FWD 1.8', '30000.00', 'Hasta 60 Cuotas', null, null, null, '2017-09-20 14:42:34', '1');
-INSERT INTO `vehiculo` VALUES ('50', '28', '1', '1', '3', '1', '1', 'U02143', 'X-TRAIL', null, '2012', 'Blanco', 'Automática', '', '18000.00', 'Hasta 60 Cuotas', null, '72847', null, '2017-09-20 14:48:41', '1');
-INSERT INTO `vehiculo` VALUES ('51', '11', '2', '1', '10', '5', '1', 'U01880', 'F-250', 'DSL D/C', '2011', 'PLATA', 'Mecánica', '3.9', '27000.00', 'Hasta 60 Cuotas', null, '94964', null, '2017-09-20 14:57:13', '1');
-INSERT INTO `vehiculo` VALUES ('52', '23', '2', '1', '10', '5', '1', 'U02041', 'BT-50', 'D/C FULL', '2011', 'Plata', 'Mecánica', '', '21500.00', 'Hasta 60 Cuotas', null, '134096', null, '2017-09-20 15:05:25', '1');
-INSERT INTO `vehiculo` VALUES ('53', '46', '1', '1', '7', '1', '1', 'U02172', 'Journey', 'SE', '2014', 'AZUL OSCURO', 'Automática', '2.4', '38000.00', 'Hasta 60 Cuotas', null, '37063', null, '2017-09-20 15:09:48', '1');
-INSERT INTO `vehiculo` VALUES ('54', '26', '1', '1', '8', '1', '1', 'U01899', 'HATCH 3DOOR', 'COOPER', '2012', 'Chocolate', 'Automática', '', '17000.00', 'Hasta 60 Cuotas', null, '28523', null, '2017-09-20 15:22:52', '1');
-INSERT INTO `vehiculo` VALUES ('55', '26', '1', '1', '8', '1', '1', 'U02124', 'HATCH 3DOOR', 'COOPER', '2013', 'BLANCO', 'Automática', '', '17000.00', 'Hasta 60 Cuotas', null, '8484', null, '2017-09-20 15:42:47', '1');
-INSERT INTO `vehiculo` VALUES ('56', '26', '1', '1', '8', '3', '1', 'U01196', 'COUNTRYMAN', 'COOPER S ALL4', '2013', 'Plata', 'Automática', '', '40000.00', 'Hasta 60 Cuotas', null, '11000', null, '2017-09-20 15:52:59', '1');
+INSERT INTO `vehiculo` VALUES ('1', '17', '3', '1', '12', '1', '1', '235748', 'Picano', null, '2012', 'Celeste', 'Automática', '1.0', '8000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-24 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('2', '45', '3', '1', '8', '1', '3', '566930', 'Sonic', 'LT', '2013', 'Plata', 'Mecánica 6 Vel.', '1.6', '18900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('3', '26', '1', '1', '12', '1', '3', '83378', 'MINI Countryman', 'ONE', '2011', 'Plata', 'Mecánica 6 Vel.', '1.6', '19900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('4', '17', '1', '1', '1', '1', '3', '249824', 'Rio', null, '2013', 'Azul', 'Automática', '1.4', '15600.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-25 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('5', '17', '1', '1', '12', '1', '3', '974886', 'Picanto', 'LX', '2011', 'Blanco', 'Mecánica 5 Vel.', '1.1', '7000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('6', '47', '2', '1', '10', '5', '3', '5099949', '2500', 'Laramie', '2011', 'Negro', 'Automática', '6.7', '39500.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('7', '45', '2', '1', '10', '5', '3', '166203', 'S10', 'C/S', '2004', 'Plata', 'Mecánica 5 Vel.', '2.8 Turbo', '15500.00', 'Hasta 48 Cuotas', null, null, '3', '2016-07-26 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('8', '23', '2', '1', '10', '5', '3', '884052', 'BT-50', 'D/C', '2011', 'Plata', 'Mecánica 5 Vel.', '2.5', '19900.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('9', '16', '1', '1', '3', '5', '3', '520145', 'Grand Cherokee', 'LIMITED', '2011', 'Plata', 'Automática', '3.6', '39000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('10', '40', '1', '1', '3', '5', '3', '601003', 'Grand Vitara', '3P', '2011', 'Plata', 'Mecánica 5 Vel.', '1.6', '16500.00', 'Hasta 48 Cuotas', null, null, '2', '2016-07-26 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('11', '45', '3', '1', '7', '1', '3', '268719', 'Spin', 'LT', '2013', 'Gris Rusk', 'Mecánica 5 Vel.', '1.8', '17000.00', 'Hasta 48 Cuotas', null, null, '7', '2016-07-26 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('12', '17', '2', '1', '3', '5', '3', '874323', 'Sorento', 'EX Full', '2009', 'Beige', 'Mecánica 5 Vel.', '2.5', '19000.00', 'Hasta 48 Cuotas', null, null, '5', '2016-07-26 08:43:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('22', '10', '1', '1', '7', '1', '1', 'U00716', 'Palio', 'Adventure', '2006', 'Blanco', 'Mecánica', '1.8CC', '7500.00', 'Hasta 60 cuotas', null, null, null, '2017-08-22 17:26:42', '1', '0');
+INSERT INTO `vehiculo` VALUES ('23', '16', '2', '1', '3', '5', '1', 'U01288', 'Grand Cherokee', 'Limited', '2012', 'Blanco', 'Automática', '3.0CC', '57000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-22 17:52:33', '1', '0');
+INSERT INTO `vehiculo` VALUES ('24', '16', '3', '1', '3', '5', '1', 'U01521', 'Grand Cherokee', 'Limited', '2012', 'Negro', 'Automática', '3.6CC', '40000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-22 17:56:42', '1', '0');
+INSERT INTO `vehiculo` VALUES ('25', '16', '3', '1', '3', '5', '1', 'U01402', 'Grand Cherokee', 'Limited', '2012', 'Plata', 'Automática', '3.6CC', '39000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-22 18:08:28', '1', '0');
+INSERT INTO `vehiculo` VALUES ('26', '17', '2', '1', '7', '1', '1', 'U01504', 'Carnival', 'EX', '2012', 'Blanco', 'Automática', '2.9CC', '27000.00', 'Hasta 48 Cuotas', null, null, null, '2017-08-23 09:01:04', '1', '0');
+INSERT INTO `vehiculo` VALUES ('27', '17', '2', '1', '7', '1', '1', 'U01452', 'Carnival', 'EX', '2009', 'Negro', 'Automática', '2.9CC', '17000.00', 'Hasta 48 Cuotas', null, null, null, '2017-08-23 09:05:57', '1', '0');
+INSERT INTO `vehiculo` VALUES ('28', '17', '1', '1', '1', '1', '1', 'U01348', 'Optima', 'EX', '2014', 'Plata', 'Automática', '2.4', '25000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:13:18', '1', '0');
+INSERT INTO `vehiculo` VALUES ('29', '26', '1', '1', '12', '1', '1', 'U01479', 'Clubman', 'Cooper S', '2013', 'Rojo / Techo Negro', 'Automática', '1.6CC', '39000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:19:16', '1', '0');
+INSERT INTO `vehiculo` VALUES ('30', '26', '1', '1', '12', '5', '1', 'U01481', 'Countryman', 'Cooper S', '2011', 'Gris Oscuro', 'Automática', '1.6CC', '24800.00', 'Hasta 60 cuotas', null, null, null, '2017-08-23 09:23:07', '1', '0');
+INSERT INTO `vehiculo` VALUES ('31', '26', '1', '1', '12', '1', '1', 'U01125', 'Hatch', 'Cooper S', '2012', 'Negro', 'Automática', '1.6CC', '35000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:26:29', '1', '0');
+INSERT INTO `vehiculo` VALUES ('32', '26', '1', '1', '12', '5', '1', 'U01534', 'Countryman', 'Cooper S', '2014', 'Blanco / Techo Negro', 'Automática', '1.6CC', '43000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:29:43', '1', '0');
+INSERT INTO `vehiculo` VALUES ('33', '26', '1', '1', '12', '1', '1', 'U00996', 'Hatch', 'Cooper', '2011', 'Beige', 'Mecánica', '1.6CC', '23000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:33:19', '1', '0');
+INSERT INTO `vehiculo` VALUES ('34', '28', '1', '1', '3', '1', '1', 'U00595', 'Murano', null, '2008', 'Plata', 'Automática', '3.5CC', '22000.00', 'Hasta 60 Cuotas', null, null, null, '2017-08-23 09:36:24', '1', '0');
+INSERT INTO `vehiculo` VALUES ('35', '45', '3', '1', '8', '1', '3', '132524', 'Agile', 'LTZ', '2012', 'Plata', 'Mecánica', '1.4', '10500.00', 'Hasta 48 meses', null, null, null, '2017-08-23 09:39:31', '1', '0');
+INSERT INTO `vehiculo` VALUES ('36', '17', '1', '1', '1', '1', '3', '040073', 'Rio', 'Sedan', '2012', 'Gris Oscuro', 'Automática', '1.4', '15500.00', 'Hasta 48 Meses', null, null, null, '2017-08-23 09:42:57', '1', '0');
+INSERT INTO `vehiculo` VALUES ('37', '33', '3', '1', '1', '1', '3', '563405', 'Symbol', 'Sedan', '2011', 'Rojo', 'Mecánica', '1.6', '10000.00', 'Hasta 48 meses', null, null, null, '2017-08-23 09:46:10', '1', '0');
+INSERT INTO `vehiculo` VALUES ('38', '45', '1', '1', '1', '1', '3', '155981', 'New Corsa', null, '2007', 'Blanco', 'Mecánica', '1.8', '8000.00', 'Hasta 36 meses', null, null, null, '2017-08-23 09:48:56', '1', '0');
+INSERT INTO `vehiculo` VALUES ('39', '45', '2', '1', '3', '5', '3', '017427', 'Captiva', 'LTZ', '2012', 'Beige', 'Automática', '2.2', '34000.00', 'Hasta 48 meses', null, null, null, '2017-08-23 09:52:05', '1', '0');
+INSERT INTO `vehiculo` VALUES ('40', '17', '2', '1', '3', '5', '3', '046442', 'Mohave', 'EX A/T', '2009', 'Blanco', 'Automática', '3.0', '26000.00', 'Hasta 48 meses', null, null, null, '2017-08-23 09:58:57', '1', '0');
+INSERT INTO `vehiculo` VALUES ('41', '4', '1', '1', '3', '1', '3', '069205', 'Q5', 'FSI', '2011', 'Negro', 'Automática', '3.2', '41500.00', 'Hasta 48 meses', null, null, null, '2017-08-23 10:16:14', '1', '0');
+INSERT INTO `vehiculo` VALUES ('42', '49', '2', '1', '10', '5', '3', '000029', 'QD32T', 'D/C', '2013', 'Azul', 'Mecánica de 5 Vel.', '3.2', '17500.00', 'Hasta 48 meses', null, null, null, '2017-08-23 11:00:35', '1', '0');
+INSERT INTO `vehiculo` VALUES ('43', '46', '1', '1', '3', '3', '1', 'U01920', 'Durango', 'LIMITED', '2014', 'Bordó', 'Automática', '3.6L V6', '39000.00', 'Hasta 60 Cuotas', null, '37995', null, '2017-09-20 11:36:10', '1', '0');
+INSERT INTO `vehiculo` VALUES ('44', '46', '1', '1', '3', '1', '1', 'U02123', 'Durango', 'SXT', '2013', 'Grafito', 'Automática', '3.6L V6', '27000.00', 'Hasta 60 Cuotas', null, '57293', null, '2017-09-20 11:49:55', '1', '0');
+INSERT INTO `vehiculo` VALUES ('45', '16', '1', '1', '3', '4', '1', 'U02144', 'WRANGLER', 'Rubicon', '2016', 'Plata', 'Automática', '3.6', '49000.00', 'Hasta 60 Cuotas', null, '10986', null, '2017-09-20 11:54:36', '1', '0');
+INSERT INTO `vehiculo` VALUES ('46', '6', '2', '1', '3', '5', '1', 'U02053', 'X5', 'XDRIVE', '2011', 'Azul', 'Automática', '3.0 TDI', '45000.00', 'Hasta 60 Cuotas', null, '116385', null, '2017-09-20 14:12:41', '1', '0');
+INSERT INTO `vehiculo` VALUES ('47', '43', '2', '1', '3', '5', '1', 'U01753', 'TOUAREG', 'DSL', '2009', 'Verde', 'Automática', '3.0', '33000.00', 'Hasta 60 cuotas', null, '83582', null, '2017-09-20 14:26:17', '1', '0');
+INSERT INTO `vehiculo` VALUES ('48', '38', '2', '1', '10', '5', '1', 'U01957', 'KYRON', 'DSL', '2008', 'Negro', 'Automática', '2.0', '11500.00', 'Hasta 60 Cuotas', null, '88215', null, '2017-09-20 14:38:22', '1', '0');
+INSERT INTO `vehiculo` VALUES ('49', '16', '3', '1', '3', '1', '1', 'U02111', 'Renegade', 'LONGITUDE', '2016', 'Negro', 'Automática', 'FWD 1.8', '30000.00', 'Hasta 60 Cuotas', null, null, null, '2017-09-20 14:42:34', '1', '0');
+INSERT INTO `vehiculo` VALUES ('50', '28', '1', '1', '3', '1', '1', 'U02143', 'X-TRAIL', null, '2012', 'Blanco', 'Automática', '', '18000.00', 'Hasta 60 Cuotas', null, '72847', null, '2017-09-20 14:48:41', '1', '0');
+INSERT INTO `vehiculo` VALUES ('51', '11', '2', '1', '10', '5', '1', 'U01880', 'F-250', 'DSL D/C', '2011', 'PLATA', 'Mecánica', '3.9', '27000.00', 'Hasta 60 Cuotas', null, '94964', null, '2017-09-20 14:57:13', '1', '0');
+INSERT INTO `vehiculo` VALUES ('52', '23', '2', '1', '10', '5', '1', 'U02041', 'BT-50', 'D/C FULL', '2011', 'Plata', 'Mecánica', '', '21500.00', 'Hasta 60 Cuotas', null, '134096', null, '2017-09-20 15:05:25', '1', '0');
+INSERT INTO `vehiculo` VALUES ('53', '46', '1', '1', '7', '1', '1', 'U02172', 'Journey', 'SE', '2014', 'AZUL OSCURO', 'Automática', '2.4', '38000.00', 'Hasta 60 Cuotas', null, '37063', null, '2017-09-20 15:09:48', '1', '0');
+INSERT INTO `vehiculo` VALUES ('54', '26', '1', '1', '8', '1', '1', 'U01899', 'HATCH 3DOOR', 'COOPER', '2012', 'Chocolate', 'Automática', '', '17000.00', 'Hasta 60 Cuotas', null, '28523', null, '2017-09-20 15:22:52', '1', '0');
+INSERT INTO `vehiculo` VALUES ('55', '26', '1', '1', '8', '1', '1', 'U02124', 'HATCH 3DOOR', 'COOPER', '2013', 'BLANCO', 'Automática', '', '17000.00', 'Hasta 60 Cuotas', null, '8484', null, '2017-09-20 15:42:47', '1', '0');
+INSERT INTO `vehiculo` VALUES ('56', '26', '1', '1', '8', '3', '1', 'U01196aa', 'COUNTRYMAN', 'COOPER S ALL4', '2013', 'Plata', 'Automática', '', '40000.00', 'Hasta 60 Cuotas', '', '11000', '5', '2017-09-20 15:52:59', '1', '0');
 
 -- ----------------------------
 -- Table structure for `vehiculo_img`

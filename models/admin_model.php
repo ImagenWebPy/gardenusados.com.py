@@ -409,6 +409,7 @@ class Admin_Model extends Model {
         $tipoTraccion = $this->helper->getTipoTraccion();
         $sedes = $this->helper->getSedes();
         $estado = $this->helper->getEstado();
+        $checkedVendido = ($sql[0]['vendido'] == 1) ? 'checked' : '';
         if ($sql[0]['estado'] == 1) {
             $selectedMostrar = 'selected';
             $selectedOcultar = '';
@@ -553,13 +554,13 @@ class Admin_Model extends Model {
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Precio</label>
-                                        <input type="number" name="vehiculo[precio]" class="form-control" value="' . utf8_encode($sql[0]['precio']) . '" placeholder="Ingrese el precio">
+                                        <input type="number" name="vehiculo[precio]" class="form-control" value="' . round($sql[0]['precio']) . '" placeholder="Ingrese el precio">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Kilometrajes</label>
-                                        <input type="number" name="vehiculo[kilometraje]" class="form-control" value="' . utf8_encode($sql[0]['kilometraje']) . '" placeholder="Ingrese el kilometraje">
+                                        <input type="number" name="vehiculo[kilometraje]" class="form-control" value="' . round($sql[0]['kilometraje']) . '" placeholder="Ingrese el kilometraje">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -580,7 +581,13 @@ class Admin_Model extends Model {
                                         <textarea class="form-control" rows="3" name="vehiculo[adicionales]">' . utf8_encode($sql[0]['adicionales']) . '</textarea>
                                     </div>
                                 </div>
-                                
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="vehiculo[vendido]" value="1" ' . $checkedVendido . '> Vendido
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->
@@ -1343,18 +1350,21 @@ class Admin_Model extends Model {
             'color' => utf8_decode($data['color']),
             'transmision' => utf8_decode($data['transmision']),
             'motor' => utf8_decode($data['motor']),
-            'precio' => utf8_decode($data['precio']),
+            'precio' => $data['precio'],
             'cuotas' => utf8_decode($data['cuotas']),
             'adicionales' => utf8_decode($data['adicionales']),
             'kilometraje' => utf8_decode($data['kilometraje']),
             'cantidad_pasajeros' => utf8_decode($data['cantidad_pasajeros']),
-            'estado' => $data['estado']
+            'estado' => $data['estado'],
+            'vendido' => $data['vendido']
         );
         $this->db->update('vehiculo', $update, "id = $id");
+
         #obtenemos la fila
         $sql = $this->db->select("select v.id,
                                         ma.descripcion as marca,
                                         v.modelo,
+                                        v.codigo,
                                         v.version,
                                         v.precio,
                                         v.fecha,
@@ -1371,7 +1381,9 @@ class Admin_Model extends Model {
         } else {
             $estado = '<a class="pointer btnCambiarEstado" data-id="' . $id . '" data-estado="0"><span class="label label-danger">Oculto</span></a>';
         }
-        $row = '<td class="sorting_1">' . date('d/m/Y', strtotime($sql[0]['fecha'])) . '</td>'
+        $row = '<td class="sorting_1">' . $sql[0]['id'] . '</td>'
+                . '<td >' . date('d/m/Y', strtotime($sql[0]['fecha'])) . '</td>'
+                . '<td>' . utf8_encode($sql[0]['codigo']) . '</td>'
                 . '<td>' . utf8_encode($sql[0]['marca']) . '</td>'
                 . '<td>' . utf8_encode($sql[0]['modelo']) . '</td>'
                 . '<td>' . utf8_encode($sql[0]['version']) . '</td>'
