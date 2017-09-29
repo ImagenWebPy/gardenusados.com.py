@@ -209,7 +209,7 @@ class Admin_Model extends Model {
         $condicion = $this->helper->getCondicion();
         $tipoVehiculo = $this->helper->getTipoVehiculo();
         $tipoTraccion = $this->helper->getTipoTraccion();
-        $sedes = $this->helper->getSedes();
+        $sedes = $this->helper->getSedesAdmin();
         $estado = $this->helper->getEstado();
         $form = '<div class="box box-primary">
                     <div class="box-header with-border">
@@ -407,7 +407,7 @@ class Admin_Model extends Model {
         $condicion = $this->helper->getCondicion();
         $tipoVehiculo = $this->helper->getTipoVehiculo();
         $tipoTraccion = $this->helper->getTipoTraccion();
-        $sedes = $this->helper->getSedes();
+        $sedes = $this->helper->getSedesAdmin();
         $estado = $this->helper->getEstado();
         $checkedVendido = ($sql[0]['vendido'] == 1) ? 'checked' : '';
         if ($sql[0]['estado'] == 1) {

@@ -327,6 +327,11 @@ class Helper {
         return $sql;
     }
 
+    public function getSedesAdmin() {
+        $sql = $this->db->select("select * from sede where estado = 1 ORDER BY id ASC");
+        return $sql;
+    }
+
     public function getEstado() {
         $sql = $this->db->select("select * from estado where estado = 1 ORDER BY descripcion ASC");
         return $sql;
