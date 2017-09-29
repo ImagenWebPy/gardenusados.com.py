@@ -323,7 +323,7 @@ class Helper {
     }
 
     public function getSedes() {
-        $sql = $this->db->select("select * from sede where estado = 1 ORDER BY id ASC");
+        $sql = $this->db->select("select * from sede where estado = 1 and id NOT IN (5) ORDER BY id ASC");
         return $sql;
     }
 
